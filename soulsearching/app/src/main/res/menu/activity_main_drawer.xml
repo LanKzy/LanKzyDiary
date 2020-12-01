@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这个是主菜单-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+<!--        日记编辑是主界面-->
+        <item
+            android:id="@+id/diary_edit"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/diary_edit" />
+        <item
+            android:id="@+id/diary_item"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/diary_item" />
+        <item
+            android:id="@+id/set_question"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/set_question" />
+     <item
+            android:id="@+id/diary_safety"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/diary_safety" />
+    </group>
+</menu>

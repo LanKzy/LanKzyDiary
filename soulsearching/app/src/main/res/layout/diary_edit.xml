@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/diary_edit_fragement"
+
+    tools:context=".ui.diary_edit.EditDiary">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Soulsearching">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:popupTheme="@style/Theme.Soulsearching" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <Button
+        android:id="@+id/start_choose_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start_choose_time"
+       />
+
+    <Button
+        android:id="@+id/end_choose_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="end_choose_time"
+        android:layout_toRightOf="@+id/start_choose_time"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weather"
+        android:entries="@array/weather"
+        android:gravity="center_horizontal"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emotion"
+        android:entries="@array/emotion"
+        android:gravity="center_horizontal"
+        />
+<!--    <Button-->
+<!--        android:id="@+id/btn_textSet"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="btn_textSet"/>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_setShaow"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="set_text_type"/>-->
+
+    <!--内容编辑区-->
+
+
+    <EditText
+        android:id="@+id/edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/spinner2"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:hint="@string/empty_diary_content"
+        android:maxLines="15"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="232dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            android:id="@+id/save_diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:elevation="6dp"
+            app:fabSize="auto"
+            app:srcCompat="?android:attr/textCheckMark" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            android:id="@+id/settime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="#DDC6C6"
+            app:elevation="6dp"
+            app:fabSize="auto"
+            app:srcCompat="?android:attr/textCheckMark" />
+    </LinearLayout>
+
+
+</LinearLayout>

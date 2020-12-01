@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">soul-searching</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">dengdengdeng</string>
+    <string name="nav_header_subtitle">签名</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="empty_content">还没有数据，点击“新建”开始写日记吧！</string>
+    <string name="empty_diary_content">写点什么吧</string>
+    <string name="diary_title_time">时间</string>
+    <string name="diary_title_weather">时间</string>
+    <string name="diary_edit">diary_edit日记编辑</string>
+    <string name="diary_item">diary_item日记列表</string>
+    <string name="set_question">set_question设置自问的内容</string>
+    <string name="diary_safety">diary_safety安全锁</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--选择心情-->
+<resources>
+    <string-array name="emotion">
+        <item>😁</item>
+        <item>😱</item>
+        <item>😌</item>
+        <item>😤</item>
+        <item>😭</item>
+        <item>😴</item>
+    </string-array>
+</resources>
