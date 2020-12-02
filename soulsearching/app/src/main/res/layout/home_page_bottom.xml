@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePageBottom">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="328dp"
+        android:textAlignment="viewEnd"
+        android:translationY="500dp">
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Button" />
+    </com.google.android.material.navigation.NavigationView>
+
+</FrameLayout>

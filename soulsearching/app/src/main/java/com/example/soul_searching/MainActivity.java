@@ -15,6 +15,8 @@ import com.example.soul_searching.Tools.DiaryData;
 import com.example.soul_searching.Tools.LanKzy;
 import com.example.soul_searching.ui.HomePage;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -34,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         System.err.println("MainActivity1");
         Ins = this;
-        LanKzy.file = "temp";
-        data = LanKzy.GetData();
+
+
+//        LanKzy.file = "temp";
+//        data = LanKzy.GetData();
         //Init();
 
 
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         createNotificationChannel("1","倒计时结束",3);
+
 //        Notification notification = new NotificationCompat.Builder(this, "1")
 //                .setAutoCancel(true)
 //                .setContentTitle("啦啦啦")
