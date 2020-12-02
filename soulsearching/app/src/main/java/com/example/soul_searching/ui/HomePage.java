@@ -203,6 +203,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
         mainBottom.setVisibility(View.INVISIBLE);
         blockButton.setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.button).setVisibility(View.INVISIBLE);
         blockButton.setOnClickListener(this);
         week.setText(week_s);
         sayHello.setText(sayHello_s);
