@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,7 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class HomePage extends Fragment implements View.OnClickListener {
@@ -132,15 +130,15 @@ public class HomePage extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Button button;
-        button = getView().findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavController nc = Navigation.findNavController(view);
-                nc.navigate(R.id.action_blankFragment_to_diary_edit2);
-            }
-        });
+//        Button button;
+//        button = getView().findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavController nc = Navigation.findNavController(view);
+//                nc.navigate(R.id.action_homePageBottom_to_lanKzyDiaryEditor);
+//            }
+//        });
     }
 
     @Override
@@ -170,13 +168,13 @@ public class HomePage extends Fragment implements View.OnClickListener {
         }else if((hourOfDay >= 18 && hourOfDay <= 24) || (hourOfDay < 4)){
             sayHello_s = "晚上好。";
         }
-
         date_s += c.get(Calendar.YEAR) + "年" +
                 (c.get(Calendar.MONTH) + 1) + "月" +
                 c.get(Calendar.DAY_OF_MONTH) + "日";
         String DOW = "星期";
         String dow = "";
-        switch (c.get(Calendar.DAY_OF_WEEK)){
+        int todayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        switch (todayOfWeek){
             case 1:
                 dow = "日";
                 break;
@@ -225,6 +223,9 @@ public class HomePage extends Fragment implements View.OnClickListener {
         int index = 0;
         for (Button b:buttons) {
             b.setOnClickListener(this);
+            if(index == todayOfWeek - 1){
+                //给今天的按钮设置样式
+            }
             b.setText(s[index]);
             index++;
         }
@@ -260,7 +261,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_my_diary:
                 NavController nc = Navigation.findNavController(v);
-                nc.navigate(R.id.action_blankFragment_to_homePageBottom);
+                nc.navigate(R.id.action_blankFragment_to_lanKzyDiaryEditor);
                 break;
         }
 //        NavController nc = Navigation.findNavController(v);
