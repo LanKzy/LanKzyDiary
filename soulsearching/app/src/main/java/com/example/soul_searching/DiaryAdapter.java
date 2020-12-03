@@ -1,6 +1,5 @@
 package com.example.soul_searching;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.soul_searching.Tools.DiaryData;
-import com.example.soul_searching.Tools.TimerService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,24 +44,24 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         }
 
         public void SetService(){
-            if(diaryItemList != null){
-                DiaryData data = diaryItemList.get(getAdapterPosition());
-                long target = data.TargetTime;
-                long current = System.currentTimeMillis();
-
-                if(target >= current){
-                    System.err.println("SetService:" + getAdapterPosition());
-                    System.err.println("SetService target:" + target + "current:" + current);
-                    //TimerService ts = new TimerService(target - current,"测试",data.Content);
-                    Intent intent = new Intent(MainActivity.Ins,TimerService.class);
-                    MainActivity.Ins.startService(intent);
-                }else{
-
-                    System.err.println("无需计时 target:" + target + "current:" + current);
-                }
-            }else{
-                System.err.println("DiaryItemList null");
-            }
+//            if(diaryItemList != null){
+//                DiaryData data = diaryItemList.get(getAdapterPosition());
+//                long target = data.TargetTime;
+//                long current = System.currentTimeMillis();
+//
+//                if(target >= current){
+//                    System.err.println("SetService:" + getAdapterPosition());
+//                    System.err.println("SetService target:" + target + "current:" + current);
+//                    //TimerService ts = new TimerService(target - current,"测试",data.Content);
+//                    Intent intent = new Intent(MainActivity.Ins,TimerService.class);
+//                    MainActivity.Ins.startService(intent);
+//                }else{
+//
+//                    System.err.println("无需计时 target:" + target + "current:" + current);
+//                }
+//            }else{
+//                System.err.println("DiaryItemList null");
+//            }
         }
 
 
@@ -88,12 +86,12 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.position = position;
         viewHolders = new LinkedList<ViewHolder>();
-        String content = diaryItemList.get(position).Content;
-        System.err.println(content);
-        System.err.println(position);
-        holder.SetService();
-        //holder.getTextView().setText(diaryItemList.get(position).Content);
-        holder.getTextView().setText("" + position);
+//        String content = diaryItemList.get(position).Content;
+//        System.err.println(content);
+//        System.err.println(position);
+//        holder.SetService();
+//        //holder.getTextView().setText(diaryItemList.get(position).Content);
+//        holder.getTextView().setText("" + position);
         viewHolders.add(holder);
     }
 

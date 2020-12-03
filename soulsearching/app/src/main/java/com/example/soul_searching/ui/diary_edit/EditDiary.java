@@ -25,7 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -126,7 +125,7 @@ public class EditDiary extends Fragment {
                 System.err.println("TargetTime" + targetTime);
 
                 EditText content = getView().findViewById(R.id.edit_content);
-                data.CurrentTime = current;
+                //data.CurrentTime = current;
 //                Calendar cal = Calendar.getInstance(Locale.CHINA);
 //                cal.set(year[0],month[0],day[0],hour[0],minute[0]);
 //                cal.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -134,16 +133,16 @@ public class EditDiary extends Fragment {
                 sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
                 try {
                     System.err.println((sdf).parse(targetTime).getTime());
-                    data.TargetTime = (sdf).parse(targetTime).getTime();
+                    //data.TargetTime = (sdf).parse(targetTime).getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                data.Content = content.getText().toString();
+                //data.Content = content.getText().toString();
 
-                data.dataList = LanKzy.getDataList() == null ? new LinkedList<DiaryData>() : LanKzy.getDataList();
-                data.dataList.add(data);
+                //data.dataList = LanKzy.getDataList() == null ? new LinkedList<DiaryData>() : LanKzy.getDataList();
+                //data.dataList.add(data);
 
-                System.err.println("Content" + data.Content);
+                //System.err.println("Content" + data.Content);
                 LanKzy.SaveData(data);
 
             }

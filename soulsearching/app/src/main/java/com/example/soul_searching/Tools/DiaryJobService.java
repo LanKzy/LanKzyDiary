@@ -2,15 +2,11 @@ package com.example.soul_searching.Tools;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.CountDownTimer;
 
 import androidx.core.app.NotificationCompat;
 
 import com.example.soul_searching.DiaryAdapter;
-import com.example.soul_searching.MainActivity;
 import com.example.soul_searching.R;
 
 import java.util.List;
@@ -33,26 +29,26 @@ public class DiaryJobService extends JobService {
         for(DiaryData d : diaryDataList){
             DiaryAdapter.ViewHolder viewHolder = DiaryAdapter.viewHolders.get(index);
 //            DateFormat.
-            final long[] time = {d.TargetTime - currentTime};
-            CountDownTimer cdt = new CountDownTimer(d.TargetTime - currentTime,1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    //计时中
-                    viewHolder.getTextView().setText("" + --time[0]);
-                    System.err.println(millisUntilFinished);
-                }
-
-                @Override
-                public void onFinish() {
-                    //这里弹窗
-                    MainActivity.Ins.getManager().notify(1,builder.build());
-                    Context c = getApplicationContext();
-                    Intent i = new Intent(getApplicationContext(), TimerService.class);
-                    c.stopService(i);
-                }
-            };
+//            final long[] time = {d.TargetTime - currentTime};
+//            CountDownTimer cdt = new CountDownTimer(d.TargetTime - currentTime,1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                    //计时中
+//                    viewHolder.getTextView().setText("" + --time[0]);
+//                    System.err.println(millisUntilFinished);
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    //这里弹窗
+//                    MainActivity.Ins.getManager().notify(1,builder.build());
+//                    Context c = getApplicationContext();
+//                    Intent i = new Intent(getApplicationContext(), TimerService.class);
+//                    c.stopService(i);
+//                }
+//            };
             System.err.println("StartCommand------------------");
-            cdt.start();
+            //cdt.start();
         }
 
         return false;

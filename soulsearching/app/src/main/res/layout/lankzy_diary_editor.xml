@@ -13,6 +13,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="408dp"
+            android:layout_height="101dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_more_action"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Button
+                android:id="@+id/button_more_action"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.955"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.49" />
+
+            <TextView
+                android:id="@+id/editor_date"
+                android:layout_width="258dp"
+                android:layout_height="32dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.106"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.492" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/editor_scrollview"
+            android:layout_width="wrap_content"
+            android:layout_height="614dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/editor_layout"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+            </androidx.gridlayout.widget.GridLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/button_scrollview"
+            android:layout_width="409dp"
+            android:layout_height="631dp"
+            android:translationY="100dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/editor_buttons_layout"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+        </ScrollView>
+
         <LinearLayout
             android:id="@+id/linearLayout_more_action"
             android:layout_width="144dp"
@@ -45,79 +119,6 @@
 
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/editor_scrollview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:translationY="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/button_scrollview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_scrollview">
-
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/editor_layout"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-            </androidx.gridlayout.widget.GridLayout>
-        </ScrollView>
-
-        <ScrollView
-            android:id="@+id/button_scrollview"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:translationY="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/editor_buttons_layout"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
-
-        </ScrollView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="408dp"
-            android:layout_height="101dp"
-            android:layout_marginBottom="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout_more_action"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/editor_date"
-                android:layout_width="258dp"
-                android:layout_height="32dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.106"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.492" />
-
-            <Button
-                android:id="@+id/button_more_action"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:text="Button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.955"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.49" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

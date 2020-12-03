@@ -17,10 +17,6 @@ import androidx.gridlayout.widget.GridLayout;
 import com.example.soul_searching.R;
 import com.example.soul_searching.Tools.LanKzy;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LanKzyDiaryEditor#newInstance} factory method to
@@ -110,8 +106,6 @@ public class LanKzyDiaryEditor extends Fragment {
         //System.err.println("width:" + rootView.getLayoutParams().width + "height:" + rootView.getLayoutParams().height);
         //width = g.getLayoutParams().width;
 
-        Init();
-        InitButtonScrollView();
 //        Button b = new Button(getContext());
 //        g.addView(b);
         //b.setLayoutParams(new ViewGroup.LayoutParams(100,200));
@@ -133,7 +127,8 @@ public class LanKzyDiaryEditor extends Fragment {
         //初始化日记格子
         editorDate.setText(HomePage.currentEditDate);
         moreActionLayout.setVisibility(View.INVISIBLE);
-        for(int r = 0;r < row;r++){
+        buttonScrollView.setVisibility(View.INVISIBLE);
+        for(int r = 0;r < 4;r++){
             for(int c = 0;c < col;c++){
                 AddDiaryItem(r,c);
             }
@@ -150,13 +145,13 @@ public class LanKzyDiaryEditor extends Fragment {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
+                currentCol += 1;
                 if(currentCol >= col){
-                    row += 1;
-                    currentRow += 1;
                     currentCol = 0;
+                    currentRow += 1;
                 }
                 AddDiaryItem(currentRow,currentCol);
-                currentCol += 1;
+                moreActionLayout.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -164,6 +159,7 @@ public class LanKzyDiaryEditor extends Fragment {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
+                buttonScrollView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -178,10 +174,9 @@ public class LanKzyDiaryEditor extends Fragment {
     private void AddDiaryItem(int r,int c){
         String placeHolder = "=============";
         if(tempPlaceholder.length > 0){
-            Random ran = new Random();
-            int tempIndex = ran.nextInt(tempPlaceholder.length - 1);
+            int tempIndex = (int) (Math.random() * tempPlaceholder.length);
             placeHolder = tempPlaceholder[tempIndex];
-            String[] newArray = new String[0];
+            String[] newArray = new String[tempPlaceholder.length - 1];
             System.arraycopy(tempPlaceholder, 0, newArray, 0, tempIndex);
             if (tempIndex < tempPlaceholder.length - 1) {
                 System.arraycopy(tempPlaceholder, tempIndex + 1, newArray, tempIndex, newArray.length - tempIndex);
@@ -197,6 +192,7 @@ public class LanKzyDiaryEditor extends Fragment {
         GridLayout.Spec rowSpec = GridLayout.spec(r, 1.0f);
         GridLayout.Spec columnSpec = GridLayout.spec(c, 1.0f);;
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+        System.err.println(placeHolder + "========" + r + "," + c);
         act.setText(placeHolder);
         //Button but = new Button(getContext());
 //                but.setHeight(5);
@@ -239,5 +235,10 @@ public class LanKzyDiaryEditor extends Fragment {
 
         cl.addView(but,params);
         buttonLayout.addView(cl,params1);
+    }
+
+    //删除一个格子之后其他的重新排列 并且修改currentRow currentCol
+    private void OnDeleteGrid(){
+
     }
 }
