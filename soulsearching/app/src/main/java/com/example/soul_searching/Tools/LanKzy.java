@@ -15,19 +15,25 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class LanKzy {
     public static String file;
 
     private static String path;
 
-    public static List<DiaryData> getDataList() {
+    public static Map<String,List<GridParams>> getDataList() {
         return dataList;
     }
 
-    private static List<DiaryData> dataList;
+    private static Map<String,List<GridParams>> dataList;
 
+    public static String[] placeHolder = new String[]{
+        "今天天气","今天吃啥","玩啥游戏","看啥电影","诶嘿嘿~","耶耶耶"
+    };
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -35,6 +41,7 @@ public class LanKzy {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
+
 
     public static void SaveData(DiaryData data) {
         ObjectOutputStream oos = null;

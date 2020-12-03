@@ -46,6 +46,11 @@ public class HomePage extends Fragment implements View.OnClickListener {
     private String[] dateOfWeek;
     private TextView bottomDate;
 
+    public static String currentEditDate;
+    public static String currentEditDow;
+
+    private String[] dow = {"日","一","二","三","四","五","六"};
+
 
     private List<Button> buttons;
 
@@ -96,26 +101,26 @@ public class HomePage extends Fragment implements View.OnClickListener {
         DiaryData data = LanKzy.GetData();
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        if(data != null){
-            DiaryAdapter adapter = new DiaryAdapter(data.dataList);
-            System.err.println("Set Adapter");
-            mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.scrollToPosition(0);
-
-            DiaryJobService.setDiaryDataList(data.dataList);
-
-            JobScheduler jobScheduler = (JobScheduler) MainActivity.Ins.getSystemService(MainActivity.Ins.JOB_SCHEDULER_SERVICE);
-            JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(MainActivity.Ins, DiaryJobService.class));  //指定哪个JobService执行操作
-            builder.setMinimumLatency(0); //执行的最小延迟时间
-            builder.setOverrideDeadline(0);  //执行的最长延时时间
-            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NOT_ROAMING);  //非漫游网络状态
-            builder.setBackoffCriteria(TimeUnit.MINUTES.toMillis(10), JobInfo.BACKOFF_POLICY_LINEAR);  //线性重试方案
-            builder.setRequiresCharging(false); // 未充电状态
-            jobScheduler.schedule(builder.build());
-
-        }
+//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+//        if(data != null){
+//            DiaryAdapter adapter = new DiaryAdapter(data.dataList);
+//            System.err.println("Set Adapter");
+//            mRecyclerView.setAdapter(adapter);
+//            mRecyclerView.setLayoutManager(mLayoutManager);
+//            mRecyclerView.scrollToPosition(0);
+//
+//            DiaryJobService.setDiaryDataList(data.dataList);
+//
+//            JobScheduler jobScheduler = (JobScheduler) MainActivity.Ins.getSystemService(MainActivity.Ins.JOB_SCHEDULER_SERVICE);
+//            JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(MainActivity.Ins, DiaryJobService.class));  //指定哪个JobService执行操作
+//            builder.setMinimumLatency(0); //执行的最小延迟时间
+//            builder.setOverrideDeadline(0);  //执行的最长延时时间
+//            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NOT_ROAMING);  //非漫游网络状态
+//            builder.setBackoffCriteria(TimeUnit.MINUTES.toMillis(10), JobInfo.BACKOFF_POLICY_LINEAR);  //线性重试方案
+//            builder.setRequiresCharging(false); // 未充电状态
+//            jobScheduler.schedule(builder.build());
+//
+//        }
 
 
         System.err.println("HomePage");
@@ -172,32 +177,10 @@ public class HomePage extends Fragment implements View.OnClickListener {
                 (c.get(Calendar.MONTH) + 1) + "月" +
                 c.get(Calendar.DAY_OF_MONTH) + "日";
         String DOW = "星期";
-        String dow = "";
         int todayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        switch (todayOfWeek){
-            case 1:
-                dow = "日";
-                break;
-            case 2:
-                dow = "一";
-                break;
-            case 3:
-                dow = "二";
-                break;
-            case 4:
-                dow = "三";
-                break;
-            case 5:
-                dow = "四";
-                break;
-            case 6:
-                dow = "五";
-                break;
-            case 7:
-                dow = "六";
-                break;
-        }
-        date_s += DOW + dow;
+
+        currentEditDow = dow[todayOfWeek - 1];
+        date_s += DOW + currentEditDow;
 
         mainBottom.setVisibility(View.INVISIBLE);
         blockButton.setVisibility(View.INVISIBLE);
@@ -219,14 +202,13 @@ public class HomePage extends Fragment implements View.OnClickListener {
         }
 
 
-        String[] s = {"日","一","二","三","四","五","六"};
         int index = 0;
         for (Button b:buttons) {
             b.setOnClickListener(this);
             if(index == todayOfWeek - 1){
                 //给今天的按钮设置样式
             }
-            b.setText(s[index]);
+            b.setText(dow[index]);
             index++;
         }
     }
@@ -236,24 +218,38 @@ public class HomePage extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.button2:
                 ShowBottom(dateOfWeek[0]);
+                currentEditDate = dateOfWeek[0];
+                currentEditDow = dow[0];
                 break;
             case R.id.button3:
                 ShowBottom(dateOfWeek[1]);
+                currentEditDate = dateOfWeek[1];
+                currentEditDow = dow[1];
                 break;
             case R.id.button4:
                 ShowBottom(dateOfWeek[2]);
+                currentEditDate = dateOfWeek[2];
+                currentEditDow = dow[2];
                 break;
             case R.id.button5:
                 ShowBottom(dateOfWeek[3]);
+                currentEditDate = dateOfWeek[3];
+                currentEditDow = dow[3];
                 break;
             case R.id.button6:
                 ShowBottom(dateOfWeek[4]);
+                currentEditDate = dateOfWeek[4];
+                currentEditDow = dow[4];
                 break;
             case R.id.button7:
                 ShowBottom(dateOfWeek[5]);
+                currentEditDate = dateOfWeek[5];
+                currentEditDow = dow[5];
                 break;
             case R.id.button8:
                 ShowBottom(dateOfWeek[6]);
+                currentEditDate = dateOfWeek[6];
+                currentEditDow = dow[6];
                 break;
             case R.id.button10:
                 mainBottom.setVisibility(View.INVISIBLE);

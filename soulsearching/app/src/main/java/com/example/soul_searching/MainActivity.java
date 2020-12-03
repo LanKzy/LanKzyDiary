@@ -115,14 +115,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DiaryData data = LanKzy.GetData();
-        if (data != null){
-            for (DiaryData d:data.dataList) {
-                //Fragment f = new DiaryGirdItem("啦啦啦~",d.Content,"这是一个通知",d.TargetTime);
-
-            }
-            //初始化
-        }
+//        DiaryData data = LanKzy.GetData();
+//        if (data != null){
+//            for (DiaryData d:data.dataList) {
+//                //Fragment f = new DiaryGirdItem("啦啦啦~",d.Content,"这是一个通知",d.TargetTime);
+//
+//            }
+//            //初始化
+//        }
         System.err.println("MainActivity3");
 
 //        for (int i = 0;i < 3;i++){
