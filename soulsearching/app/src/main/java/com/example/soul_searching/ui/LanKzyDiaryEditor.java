@@ -152,15 +152,17 @@ public class LanKzyDiaryEditor extends Fragment {
         editorLayout.removeAllViews();
         if(dataList != null && dataList.size() > 0){
             if(isReset){
+                System.err.println("reset");
                 int tempR = 0,tempC = 0;
                 for(GridParams gp : dataList){
-                    if(tempR < row){
-                        if(tempC < col){
-                            gp.SetIns(AddDiaryItem(tempR,tempC,gridParams.size(),gp.content,gp.placeHolder));
-                            gp.r = tempR;
-                            gp.c = tempC;
-                            tempC += 1;
-                        }
+                    System.err.println("reset:" + tempR + "," + tempR);
+                    gp.SetIns(AddDiaryItem(tempR,tempC,gridParams.size(),gp.content,gp.placeHolder));
+                    gp.r = tempR;
+                    gp.c = tempC;
+                    if(tempC < col - 1){
+                        tempC += 1;
+                    }else{
+                        tempC = 0;
                         tempR += 1;
                     }
                 }
@@ -205,6 +207,7 @@ public class LanKzyDiaryEditor extends Fragment {
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
                 buttonScrollView.setVisibility(View.VISIBLE);
+                buttonScrollView.setScrollY(editorScrollView.getScrollY());
             }
         });
 
@@ -218,6 +221,14 @@ public class LanKzyDiaryEditor extends Fragment {
 
     private void InitButtonScrollView(List<GridParams> dataList){
         buttonLayout.removeAllViews();
+        buttonScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                System.err.println(i1);
+                editorScrollView.setScrollY(i1);
+            }
+        });
+//        scrollView.fullScroll(ScrollView.FOCUS_DOWN);滚动到底部
         if(dataList != null){
             for(GridParams gp : dataList){
                 AddDeleteButton(gp.r,gp.c,gridParams.size(),gp);
@@ -293,6 +304,7 @@ public class LanKzyDiaryEditor extends Fragment {
             public void onClick(View v) {
 //                buttonLayout.removeViewAt(finalR + finalC);
 //                editorLayout.removeViewAt(finalR + finalC);
+                System.err.println(r + "," + c);
                 OnDeleteGrid(finalR,finalC,index,gp);
             }
         });
@@ -307,6 +319,7 @@ public class LanKzyDiaryEditor extends Fragment {
             View buttonTarget = buttonLayout.getChildAt(r + c);
             View editorTarget = editorLayout.getChildAt(r + c);
             if(gp != null){
+                System.err.println("remove:" + gp.r + "," + gp.c);
                 gridParams.remove(gp);
             }
             buttonLayout.removeView(buttonTarget);
