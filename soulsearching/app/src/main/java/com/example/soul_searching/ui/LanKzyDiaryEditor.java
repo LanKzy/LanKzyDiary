@@ -15,7 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.example.soul_searching.R;
+import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +59,9 @@ public class LanKzyDiaryEditor extends Fragment {
     private String[] tempPlaceholder;
 
     private int currentRow,currentCol;
+
+    List<GridParams> gridParams;
+
 
     public LanKzyDiaryEditor() {
         // Required empty public constructor
@@ -103,6 +111,18 @@ public class LanKzyDiaryEditor extends Fragment {
         addGrid = rootView.findViewById(R.id.add_grid);
         editGrid = rootView.findViewById(R.id.edit_grid);
         importImage = rootView.findViewById(R.id.import_image);
+
+        gridParams = new ArrayList<GridParams>();
+
+        Map<String, List<GridParams>> aa = LanKzy.getDataList();
+
+        if(aa != null){
+            List<GridParams> dataList = aa.get(HomePage.currentEditDate);
+            if(dataList != null){
+                gridParams = dataList;
+            }
+        }
+
         //System.err.println("width:" + rootView.getLayoutParams().width + "height:" + rootView.getLayoutParams().height);
         //width = g.getLayoutParams().width;
 
@@ -111,28 +131,52 @@ public class LanKzyDiaryEditor extends Fragment {
         //b.setLayoutParams(new ViewGroup.LayoutParams(100,200));
 //        b.setTranslationY();
 
+        //有数据加载数据   无数据使用默认模板
+        Init(gridParams,false);
+        //初始化删除格子的按钮
+        InitButtonScrollView(gridParams);
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Init();
-        //初始化删除格子的按钮
-        InitButtonScrollView();
     }
 
-    private void Init(){
+    private void Init(List<GridParams> dataList,boolean isReset){
         tempPlaceholder = LanKzy.placeHolder;
         //初始化日记格子
         editorDate.setText(HomePage.currentEditDate);
         moreActionLayout.setVisibility(View.INVISIBLE);
         buttonScrollView.setVisibility(View.INVISIBLE);
-        for(int r = 0;r < 4;r++){
-            for(int c = 0;c < col;c++){
-                AddDiaryItem(r,c);
+        editorLayout.removeAllViews();
+        if(dataList != null && dataList.size() > 0){
+            if(isReset){
+                int tempR = 0,tempC = 0;
+                for(GridParams gp : dataList){
+                    if(tempR < row){
+                        if(tempC < col){
+                            gp.SetIns(AddDiaryItem(tempR,tempC,gridParams.size(),gp.content,gp.placeHolder));
+                            gp.r = tempR;
+                            gp.c = tempC;
+                            tempC += 1;
+                        }
+                        tempR += 1;
+                    }
+                }
+            }else{
+                for(GridParams gp : dataList){
+                    gp.SetIns(AddDiaryItem(gp.r,gp.c,gridParams.size(),gp.content,gp.placeHolder));
+                }
+            }
+        }else{
+            for(int r = 0;r < 4;r++){
+                for(int c = 0;c < col;c++){
+                    AddDiaryItem(r,c,gridParams.size(),null,null);
+                }
             }
         }
+
 
         buttonMoreAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +194,8 @@ public class LanKzyDiaryEditor extends Fragment {
                     currentCol = 0;
                     currentRow += 1;
                 }
-                AddDiaryItem(currentRow,currentCol);
+                AddDiaryItem(currentRow,currentCol,gridParams.size(),null,null);
+                AddDeleteButton(currentRow,currentCol,gridParams.size(),null);
                 moreActionLayout.setVisibility(View.INVISIBLE);
             }
         });
@@ -171,28 +216,54 @@ public class LanKzyDiaryEditor extends Fragment {
         });
     }
 
-    private void AddDiaryItem(int r,int c){
-        String placeHolder = "=============";
-        if(tempPlaceholder.length > 0){
-            int tempIndex = (int) (Math.random() * tempPlaceholder.length);
-            placeHolder = tempPlaceholder[tempIndex];
-            String[] newArray = new String[tempPlaceholder.length - 1];
-            System.arraycopy(tempPlaceholder, 0, newArray, 0, tempIndex);
-            if (tempIndex < tempPlaceholder.length - 1) {
-                System.arraycopy(tempPlaceholder, tempIndex + 1, newArray, tempIndex, newArray.length - tempIndex);
+    private void InitButtonScrollView(List<GridParams> dataList){
+        buttonLayout.removeAllViews();
+        if(dataList != null){
+            for(GridParams gp : dataList){
+                AddDeleteButton(gp.r,gp.c,gridParams.size(),gp);
             }
-            tempPlaceholder = newArray;
         }else{
-            placeHolder = "俺也8知道写点啥了";
+            for(int r = 0;r < row;r++){
+                for(int c = 0;c < col;c++){
+                    AddDeleteButton(r,c,gridParams.size(),null);
+                }
+            }
         }
+    }
+
+    private EditText AddDiaryItem(int r,int c,int index,String content,String placeHolder_){
+        String placeHolder = "=============";
+        EditText act = new EditText(getContext());
+        if(placeHolder_ != null){
+            placeHolder = placeHolder_;
+        }else{
+            if(tempPlaceholder.length > 0){
+                int tempIndex = (int) (Math.random() * tempPlaceholder.length);
+                placeHolder = tempPlaceholder[tempIndex];
+                String[] newArray = new String[tempPlaceholder.length - 1];
+                System.arraycopy(tempPlaceholder, 0, newArray, 0, tempIndex);
+                if (tempIndex < tempPlaceholder.length - 1) {
+                    System.arraycopy(tempPlaceholder, tempIndex + 1, newArray, tempIndex, newArray.length - tempIndex);
+                }
+                tempPlaceholder = newArray;
+            }else{
+                placeHolder = "俺也8知道写点啥了";
+            }
+            GridParams gp = new GridParams(placeHolder,"",r,c,index);
+            gp.SetIns(act);
+            gridParams.add(gp);
+        }
+
         currentRow = r;
         currentCol = c;
-        EditText act = new EditText(getContext());
         act.setHeight(500);
         GridLayout.Spec rowSpec = GridLayout.spec(r, 1.0f);
         GridLayout.Spec columnSpec = GridLayout.spec(c, 1.0f);;
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
         System.err.println(placeHolder + "========" + r + "," + c);
+        if(content != null){
+            placeHolder += "\n" + content;
+        }
         act.setText(placeHolder);
         //Button but = new Button(getContext());
 //                but.setHeight(5);
@@ -200,18 +271,10 @@ public class LanKzyDiaryEditor extends Fragment {
         //but.setVisibility(View.INVISIBLE);
         editorLayout.addView(act,params);
         //g.addView(but,params);
+        return act;
     }
 
-    private void InitButtonScrollView(){
-        buttonLayout.removeAllViews();
-        for(int r = 0;r < row;r++){
-            for(int c = 0;c < col;c++){
-                AddDeleteButton(r,c);
-            }
-        }
-    }
-
-    private void AddDeleteButton(int r,int c){
+    private void AddDeleteButton(int r,int c,int index,GridParams gp){
         Button but = new Button(getContext());
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
@@ -228,8 +291,9 @@ public class LanKzyDiaryEditor extends Fragment {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonLayout.removeViewAt(finalR + finalC);
-                editorLayout.removeViewAt(finalR + finalC);
+//                buttonLayout.removeViewAt(finalR + finalC);
+//                editorLayout.removeViewAt(finalR + finalC);
+                OnDeleteGrid(finalR,finalC,index,gp);
             }
         });
 
@@ -238,7 +302,71 @@ public class LanKzyDiaryEditor extends Fragment {
     }
 
     //删除一个格子之后其他的重新排列 并且修改currentRow currentCol
-    private void OnDeleteGrid(){
+    private void OnDeleteGrid(int r, int c, int index, GridParams gp){
+        if(buttonLayout.getChildCount() > 0 && editorLayout.getChildCount() > 0){
+            View buttonTarget = buttonLayout.getChildAt(r + c);
+            View editorTarget = editorLayout.getChildAt(r + c);
+            if(gp != null){
+                gridParams.remove(gp);
+            }
+            buttonLayout.removeView(buttonTarget);
+            editorLayout.removeView(editorTarget);
+            Init(gridParams,true);
+            InitButtonScrollView(gridParams);
+//            System.err.println("删除：" + r + "," + c);
+//            System.err.println(currentRow + "," + currentCol);
+//            int startR = r;
+//            int startC = c + 1;
+//            if (startC >= col && startR > 0){
+//                startC = col - 1;
+//                startR -= 1;
+//            }
+//            int tempR = startR,tempC = startC;
+//            for(int i = startR;i < currentRow;i++){
+//                System.err.println(i + ",,,");
+//                for(int j = startC;j < currentCol;j++){
+//                    buttonLayout.removeView(buttonLayout.getChildAt(i + j));
+//                    //Button tempButton = (Button) buttonLayout.getChildAt(i + j);
+//                    if (tempC < 0 && tempR > 0){
+//                        tempC = col - 1;
+//                        tempR = i - 1;
+//                    }else{
+//                        tempR = i;
+//                        tempC = j - 1;
+//                    }
+//                    GridLayout.Spec rowSpec = GridLayout.spec(tempR, 1.0f);
+//                    GridLayout.Spec columnSpec = GridLayout.spec(tempC, 1.0f);;
+//                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+//                    System.err.println("reset " + i + "," + j + " to " + tempR + "," + tempC);
+//                    int finalTempR = tempR;
+//                    int finalTempC = tempC;
+////                    tempButton.setOnClickListener(new View.OnClickListener() {
+////                        @Override
+////                        public void onClick(View v) {
+////                            //重置点击事件
+////                            buttonLayout.removeViewAt(finalTempR + finalTempC);
+////                            editorLayout.removeViewAt(finalTempR + finalTempC);
+////                            OnDeleteGrid(finalTempR, finalTempC);
+////                        }
+////                    });
+////                    buttonLayout.removeView(tempButton);
+////                    buttonLayout.addView(tempButton,params);
+//
+//                    //editor layout
+//                    EditText tempEditText = (EditText) editorLayout.getChildAt(j + j);
+//
+//                    editorLayout.removeView(tempEditText);
+//                    editorLayout.addView(tempEditText,params);
+//                }
+//            }
+
+
+        }
+        //然后重置按钮点击事件
+    }
+
+    //重置按钮点击事件
+    private void ResetButton(){
 
     }
 }
