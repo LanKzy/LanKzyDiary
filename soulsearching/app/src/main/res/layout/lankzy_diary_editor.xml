@@ -64,9 +64,7 @@
                 android:id="@+id/editor_layout"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-            </androidx.gridlayout.widget.GridLayout>
+                android:layout_gravity="center_horizontal"/>
         </ScrollView>
 
         <ScrollView

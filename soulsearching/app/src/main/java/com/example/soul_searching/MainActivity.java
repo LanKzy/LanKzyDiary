@@ -12,15 +12,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.soul_searching.Tools.DiaryData;
+import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
 import com.example.soul_searching.ui.HomePage;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private DiaryData data;
+    private Map<String, List<GridParams>> data;
 
     public static MainActivity Ins;
 
@@ -37,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         System.err.println("MainActivity1");
         Ins = this;
 
+        LanKzy.file = "temp";
+        data = LanKzy.GetData();
 
-//        LanKzy.file = "temp";
-//        data = LanKzy.GetData();
         //Init();
 
 
@@ -95,15 +98,6 @@ public class MainActivity extends AppCompatActivity {
 //        getMenuInflater().inflate(R.menu.main, menu);
 //        return true;
 //    }
-    private void Init(){
-        if(data != null){
-            System.err.println(data.dataList.size());
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            HomePage fragment = new HomePage();
-            //transaction.replace(R.id.diary_grid, fragment);
-            transaction.commit();
-        }
-    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.diary_edit_fragement);

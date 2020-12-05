@@ -3,8 +3,9 @@ package com.example.soul_searching.Tools;
 import android.view.View;
 import android.widget.Button;
 
-public class GridParams {
+import java.io.Serializable;
 
+public class GridParams implements Serializable {
 
     public String placeHolder;
 
@@ -22,13 +23,13 @@ public class GridParams {
 
     public int r,c;
 
-    private View inss;
+    //private View inss;
 
-    public void SetIns(View view){
-        this.inss = view;
-    }
-
-    public View GetIns(){
-        return inss;
-    }
+//    public void SetIns(View view){
+//        this.inss = view;
+//    }
+//
+//    public View GetIns(){
+//        return inss;
+//    }
 }

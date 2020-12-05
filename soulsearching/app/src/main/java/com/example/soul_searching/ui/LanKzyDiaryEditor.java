@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.soul_searching.R;
 import com.example.soul_searching.Tools.GridParams;
@@ -61,6 +63,10 @@ public class LanKzyDiaryEditor extends Fragment {
     private int currentRow,currentCol;
 
     List<GridParams> gridParams;
+
+    public List<GridParams> getGridParams(){
+        return gridParams;
+    }
 
 
     public LanKzyDiaryEditor() {
@@ -132,9 +138,13 @@ public class LanKzyDiaryEditor extends Fragment {
 //        b.setTranslationY();
 
         //有数据加载数据   无数据使用默认模板
+        System.err.println("Init LanKzyDiaryEditor ===========");
         Init(gridParams,false);
+
+
         //初始化删除格子的按钮
         InitButtonScrollView(gridParams);
+
         return rootView;
     }
 
@@ -150,13 +160,15 @@ public class LanKzyDiaryEditor extends Fragment {
         moreActionLayout.setVisibility(View.INVISIBLE);
         buttonScrollView.setVisibility(View.INVISIBLE);
         editorLayout.removeAllViews();
+        int tempIndex = 0;
         if(dataList != null && dataList.size() > 0){
             if(isReset){
                 System.err.println("reset");
                 int tempR = 0,tempC = 0;
                 for(GridParams gp : dataList){
                     System.err.println("reset:" + tempR + "," + tempR);
-                    gp.SetIns(AddDiaryItem(tempR,tempC,gridParams.size(),gp.content,gp.placeHolder));
+                    System.err.println(gp.content);
+                    AddDiaryItem(tempR,tempC,tempIndex,gp.content,gp.placeHolder);
                     gp.r = tempR;
                     gp.c = tempC;
                     if(tempC < col - 1){
@@ -165,16 +177,20 @@ public class LanKzyDiaryEditor extends Fragment {
                         tempC = 0;
                         tempR += 1;
                     }
+                    tempIndex += 1;
                 }
             }else{
                 for(GridParams gp : dataList){
-                    gp.SetIns(AddDiaryItem(gp.r,gp.c,gridParams.size(),gp.content,gp.placeHolder));
+                    System.err.println(gp.content + "============");
+                    AddDiaryItem(gp.r,gp.c,tempIndex,gp.content,gp.placeHolder);
+                    tempIndex += 1;
                 }
             }
         }else{
             for(int r = 0;r < 4;r++){
                 for(int c = 0;c < col;c++){
-                    AddDiaryItem(r,c,gridParams.size(),null,null);
+                    AddDiaryItem(r,c,tempIndex,null,null);
+                    tempIndex += 1;
                 }
             }
         }
@@ -242,9 +258,10 @@ public class LanKzyDiaryEditor extends Fragment {
         }
     }
 
-    private EditText AddDiaryItem(int r,int c,int index,String content,String placeHolder_){
+    private Button AddDiaryItem(int r,int c,int index,String content,String placeHolder_){
         String placeHolder = "=============";
-        EditText act = new EditText(getContext());
+        //EditText act = new EditText(getContext());
+        Button act = new Button(getContext());
         if(placeHolder_ != null){
             placeHolder = placeHolder_;
         }else{
@@ -261,7 +278,7 @@ public class LanKzyDiaryEditor extends Fragment {
                 placeHolder = "俺也8知道写点啥了";
             }
             GridParams gp = new GridParams(placeHolder,"",r,c,index);
-            gp.SetIns(act);
+            //gp.SetIns(act);
             gridParams.add(gp);
         }
 
@@ -272,14 +289,35 @@ public class LanKzyDiaryEditor extends Fragment {
         GridLayout.Spec columnSpec = GridLayout.spec(c, 1.0f);;
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
         System.err.println(placeHolder + "========" + r + "," + c);
-        if(content != null){
-            placeHolder += "\n" + content;
-        }
-        act.setText(placeHolder);
+
         //Button but = new Button(getContext());
 //                but.setHeight(5);
 //                but.setWidth(5);
         //but.setVisibility(View.INVISIBLE);
+        if(content == null){
+            content = "";
+        }
+        String finalPlaceHolder = placeHolder;
+
+        String finalContent = content;
+
+        LanKzyDiaryEditor parent = this;
+        act.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //携带参数跳转到编辑页面
+                //从编辑页面返回时判断值是否发生改变，如果改变，存到缓存 LanKzy.getDataList()
+                NavController nc = Navigation.findNavController(v);
+                System.err.println(finalPlaceHolder + "---------------");
+                System.err.println(finalContent + "---------------");
+                System.err.println(index);
+                LanKzyChildEditor.Init(finalPlaceHolder, finalContent,parent,index);
+                nc.navigate(R.id.action_lanKzyDiaryEditor_to_lanKzyChildEditor);
+                System.err.println(finalPlaceHolder);
+            }
+        });
+        placeHolder += "\n" + content;
+        act.setText(placeHolder);
         editorLayout.addView(act,params);
         //g.addView(but,params);
         return act;
@@ -304,7 +342,6 @@ public class LanKzyDiaryEditor extends Fragment {
             public void onClick(View v) {
 //                buttonLayout.removeViewAt(finalR + finalC);
 //                editorLayout.removeViewAt(finalR + finalC);
-                System.err.println(r + "," + c);
                 OnDeleteGrid(finalR,finalC,index,gp);
             }
         });

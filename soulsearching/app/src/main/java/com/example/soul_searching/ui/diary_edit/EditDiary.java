@@ -143,7 +143,7 @@ public class EditDiary extends Fragment {
                 //data.dataList.add(data);
 
                 //System.err.println("Content" + data.Content);
-                LanKzy.SaveData(data);
+                //LanKzy.SaveData(data);
 
             }
         });

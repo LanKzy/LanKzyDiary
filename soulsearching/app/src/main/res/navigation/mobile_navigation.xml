@@ -46,25 +46,23 @@
         android:label="fragment_blank2"
         tools:layout="@layout/homepage" >
         <action
-            android:id="@+id/action_blankFragment_to_diary_edit2"
-            app:destination="@id/diary_edit" />
-        <action
-            android:id="@+id/action_blankFragment_to_homePageBottom"
-            app:destination="@id/homePageBottom" />
-        <action
             android:id="@+id/action_blankFragment_to_lanKzyDiaryEditor"
             app:destination="@id/lanKzyDiaryEditor" />
     </fragment>
     <fragment
-        android:id="@+id/homePageBottom"
-        android:name="com.example.soul_searching.HomePageBottom"
-        android:label="home_page_bottom"
-        tools:layout="@layout/home_page_bottom" />
-    <fragment
         android:id="@+id/lanKzyDiaryEditor"
         android:name="com.example.soul_searching.ui.LanKzyDiaryEditor"
         android:label="lankzy_diary_editor"
-        tools:layout="@layout/lankzy_diary_editor" />
+        tools:layout="@layout/lankzy_diary_editor" >
+        <action
+            android:id="@+id/action_lanKzyDiaryEditor_to_lanKzyChildEditor"
+            app:destination="@id/lanKzyChildEditor" />
+    </fragment>
+    <fragment
+        android:id="@+id/lanKzyChildEditor"
+        android:name="com.example.soul_searching.ui.LanKzyChildEditor"
+        android:label="fragment_lankzy_child_editor"
+        tools:layout="@layout/fragment_lankzy_child_editor" />
 
 
 </navigation>

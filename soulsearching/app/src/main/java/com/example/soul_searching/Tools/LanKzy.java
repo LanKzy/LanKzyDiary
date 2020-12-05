@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class LanKzy {
     };
 
 
-    public static void SaveData(DiaryData data) {
+    public static void SaveData(Map<String,List<GridParams>> data) {
         ObjectOutputStream oos = null;
         FileOutputStream fos = null;
         verifyStoragePermissions(MainActivity.Ins);
@@ -54,21 +55,18 @@ public class LanKzy {
             ContextWrapper cw = new ContextWrapper(MainActivity.Ins.getApplicationContext());
             File directory = cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             File file = new File(directory, "temp");
-            System.err.println("Save:" + data.dataList);
             fos = new FileOutputStream(file);
-            System.err.println("Save:" + data.dataList);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(data);
             oos.flush();
             oos.close();
             fos.close();
-            System.err.println("Save:" + data.dataList);
         } catch (Exception e) {
             System.err.println("啦啦啦~~~" + e);
         }
     }
 
-    public static DiaryData GetData() {
+    public static Map<String,List<GridParams>> GetData() {
         path = Environment.getExternalStorageDirectory().getAbsolutePath();
         ObjectInputStream ois = null;
         FileInputStream fis = null;
@@ -80,16 +78,23 @@ public class LanKzy {
             fis = new FileInputStream(file);
             ois = new ObjectInputStream(fis);
 
-            DiaryData data = (DiaryData) ois.readObject();
+            Map<String,List<GridParams>> data = (Map<String,List<GridParams>>) ois.readObject();
             ois.close();
             fis.close();
-            dataList = data.dataList;
-            return data;
+            dataList = data;
+            System.err.println("Set dataList");
+            if(dataList == null){
+                System.err.println("new dataList");
+                dataList = new HashMap<String,List<GridParams>>();
+            }
+            return dataList;
         } catch (Exception e) {
+            System.err.println("初始化失败");
             System.err.println(e);
         }
-
-        return null;
+        dataList = new HashMap<String,List<GridParams>>();
+        System.err.println("return new");
+        return dataList;
     }
 
     public static void verifyStoragePermissions(Activity activity) {
