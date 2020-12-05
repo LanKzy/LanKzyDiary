@@ -5,25 +5,20 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.soul_searching.Tools.DiaryData;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
-import com.example.soul_searching.ui.HomePage;
 
-import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Map<String, List<GridParams>> data;
+    private Map<String, GridParams> data;
 
     public static MainActivity Ins;
 

@@ -15,10 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class LanKzy {
@@ -26,11 +23,11 @@ public class LanKzy {
 
     private static String path;
 
-    public static Map<String,List<GridParams>> getDataList() {
+    public static Map<String,GridParams> getDataList() {
         return dataList;
     }
 
-    private static Map<String,List<GridParams>> dataList;
+    private static Map<String,GridParams> dataList;
 
     public static String[] placeHolder = new String[]{
         "今天天气","今天吃啥","玩啥游戏","看啥电影","诶嘿嘿~","耶耶耶"
@@ -44,7 +41,7 @@ public class LanKzy {
     };
 
 
-    public static void SaveData(Map<String,List<GridParams>> data) {
+    public static void SaveData(Map<String,GridParams> data) {
         ObjectOutputStream oos = null;
         FileOutputStream fos = null;
         verifyStoragePermissions(MainActivity.Ins);
@@ -61,12 +58,13 @@ public class LanKzy {
             oos.flush();
             oos.close();
             fos.close();
+
         } catch (Exception e) {
             System.err.println("啦啦啦~~~" + e);
         }
     }
 
-    public static Map<String,List<GridParams>> GetData() {
+    public static Map<String,GridParams> GetData() {
         path = Environment.getExternalStorageDirectory().getAbsolutePath();
         ObjectInputStream ois = null;
         FileInputStream fis = null;
@@ -78,21 +76,21 @@ public class LanKzy {
             fis = new FileInputStream(file);
             ois = new ObjectInputStream(fis);
 
-            Map<String,List<GridParams>> data = (Map<String,List<GridParams>>) ois.readObject();
+            Map<String,GridParams> data = (Map<String,GridParams>) ois.readObject();
             ois.close();
             fis.close();
             dataList = data;
             System.err.println("Set dataList");
             if(dataList == null){
                 System.err.println("new dataList");
-                dataList = new HashMap<String,List<GridParams>>();
+                dataList = new HashMap<String,GridParams>();
             }
             return dataList;
         } catch (Exception e) {
             System.err.println("初始化失败");
             System.err.println(e);
         }
-        dataList = new HashMap<String,List<GridParams>>();
+        dataList = new HashMap<String,GridParams>();
         System.err.println("return new");
         return dataList;
     }

@@ -17,6 +17,13 @@ public class TimerService extends Service {
     private long timeDelay;
     private String title;
     private String content;
+
+    public TimerService(long l, String s, String content) {
+        this.timeDelay = l;
+        this.title = s;
+        this.content = content;
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,7 +40,8 @@ public class TimerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final NotificationCompat.Builder builder = GetBuilder();
-        CountDownTimer cdt = new CountDownTimer(10000,1) {
+        System.err.println("Start Service" + startId);
+        CountDownTimer cdt = new CountDownTimer(startId,1) {
             @Override
             public void onTick(long millisUntilFinished) {
                 //计时中
@@ -48,6 +56,7 @@ public class TimerService extends Service {
                 Intent i = new Intent(getApplicationContext(), TimerService.class);
                 c.stopService(i);
             }
+
         };
         System.err.println("StartCommand------------------");
         cdt.start();

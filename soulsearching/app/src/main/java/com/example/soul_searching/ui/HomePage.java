@@ -1,9 +1,9 @@
 package com.example.soul_searching.ui;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +11,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.soul_searching.DiaryAdapter;
 import com.example.soul_searching.MainActivity;
 import com.example.soul_searching.R;
-import com.example.soul_searching.Tools.DiaryData;
-import com.example.soul_searching.Tools.DiaryJobService;
+import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
+import com.example.soul_searching.Tools.TimerService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class HomePage extends Fragment implements View.OnClickListener {
     protected RecyclerView mRecyclerView;
@@ -121,8 +119,35 @@ public class HomePage extends Fragment implements View.OnClickListener {
 //            jobScheduler.schedule(builder.build());
 //
 //        }
+        long current = System.currentTimeMillis();
+        System.err.println(LanKzy.getDataList().size());
+        for(GridParams gp : LanKzy.getDataList().values()){
+            long target = gp.targetTime;
+            if(current > target){
+                //无需计时
+                System.err.println("无需计时:" + current + "========" + target);
+                continue;
+            }
 
+            final NotificationCompat.Builder builder = GetBuilder();
+            CountDownTimer cdt = new CountDownTimer(target - current,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    //计时中
+                    //System.err.println(millisUntilFinished);
+                }
 
+                @Override
+                public void onFinish() {
+                    //这里弹窗
+                    MainActivity.Ins.getManager().notify(1,builder.build());
+                    Intent i = new Intent(MainActivity.Ins, TimerService.class);
+                    //c.stopService(i);
+                }
+            };
+            cdt.start();
+            //ts.startService(intent);
+        }
         System.err.println("HomePage");
 
         Init();
@@ -151,7 +176,16 @@ public class HomePage extends Fragment implements View.OnClickListener {
         super.onResume();
 
     }
-
+    private NotificationCompat.Builder GetBuilder(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "1")
+                .setAutoCancel(true)
+                .setContentTitle("弹窗标题")
+                .setContentText("弹窗内容")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        return builder;
+    }
 
 
     private void Init(){

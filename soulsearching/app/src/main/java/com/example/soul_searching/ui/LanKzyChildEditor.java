@@ -1,24 +1,20 @@
 package com.example.soul_searching.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.soul_searching.R;
+import com.example.soul_searching.Tools.GridParam;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -150,18 +146,19 @@ public class LanKzyChildEditor extends Fragment {
     }
 
     private void SaveData(){
-        List<GridParams> gridParamsList = parent.getGridParams();
-        for(GridParams gp:gridParamsList){
+        GridParams gridParamsList = parent.getGridParams();
+        for(GridParam gp:gridParamsList.gridParamList){
             if(gp.index == index){
                 gp.placeHolder = placeHolder;
                 gp.content = content;
                 System.err.println("Save:" + placeHolder + "====" + content);
-                Map<String,List<GridParams>> dataList = LanKzy.getDataList();
+                Map<String,GridParams> dataList = LanKzy.getDataList();
                 if(dataList.containsKey(HomePage.currentEditDate)){
                     System.err.println("Replace " + HomePage.currentEditDate);
                     dataList.replace(date,gridParamsList);
                 }else{
-                    System.err.println("Set " + HomePage.currentEditDate);
+                    System.err.println("Set1 " + HomePage.currentEditDate);
+                    System.err.println("Set1 " + gridParamsList.targetTime);
                     dataList.put(date,gridParamsList);
                 }
                 LanKzy.SaveData(dataList);

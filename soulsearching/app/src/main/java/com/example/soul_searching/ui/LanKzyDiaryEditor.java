@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,13 +20,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.soul_searching.R;
+import com.example.soul_searching.Tools.GridParam;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,9 +70,9 @@ public class LanKzyDiaryEditor extends Fragment {
 
     private int currentRow,currentCol;
 
-    List<GridParams> gridParams;
+    GridParams gridParams;
 
-    public List<GridParams> getGridParams(){
+    public GridParams getGridParams(){
         return gridParams;
     }
 
@@ -125,13 +127,16 @@ public class LanKzyDiaryEditor extends Fragment {
         importImage = rootView.findViewById(R.id.import_image);
         setTime = rootView.findViewById(R.id.set_time);
 
-        gridParams = new ArrayList<GridParams>();
+        gridParams = new GridParams();
+        gridParams.gridParamList = new ArrayList<GridParam>();
 
-        Map<String, List<GridParams>> aa = LanKzy.getDataList();
+        Map<String, GridParams> aa = LanKzy.getDataList();
 
         if(aa != null){
-            List<GridParams> dataList = aa.get(HomePage.currentEditDate);
+            GridParams dataList = aa.get(HomePage.currentEditDate);
+            System.err.println("1");
             if(dataList != null){
+                System.err.println("2");
                 gridParams = dataList;
             }
         }
@@ -150,7 +155,7 @@ public class LanKzyDiaryEditor extends Fragment {
 
 
         //初始化删除格子的按钮
-        InitButtonScrollView(gridParams);
+        InitButtonScrollView(gridParams.gridParamList);
 
         return rootView;
     }
@@ -160,7 +165,7 @@ public class LanKzyDiaryEditor extends Fragment {
         super.onResume();
     }
 
-    private void Init(List<GridParams> dataList,boolean isReset){
+    private void Init(GridParams dataList,boolean isReset){
         tempPlaceholder = LanKzy.placeHolder;
         //初始化日记格子
         editorDate.setText(HomePage.currentEditDate);
@@ -168,11 +173,11 @@ public class LanKzyDiaryEditor extends Fragment {
         buttonScrollView.setVisibility(View.INVISIBLE);
         editorLayout.removeAllViews();
         int tempIndex = 0;
-        if(dataList != null && dataList.size() > 0){
+        if(dataList.gridParamList != null && dataList.gridParamList.size() > 0){
             if(isReset){
                 System.err.println("reset");
                 int tempR = 0,tempC = 0;
-                for(GridParams gp : dataList){
+                for(GridParam gp : dataList.gridParamList){
                     System.err.println("reset:" + tempR + "," + tempR);
                     System.err.println(gp.content);
                     AddDiaryItem(tempR,tempC,tempIndex,gp.content,gp.placeHolder);
@@ -187,7 +192,7 @@ public class LanKzyDiaryEditor extends Fragment {
                     tempIndex += 1;
                 }
             }else{
-                for(GridParams gp : dataList){
+                for(GridParam gp : dataList.gridParamList){
                     System.err.println(gp.content + "============");
                     AddDiaryItem(gp.r,gp.c,tempIndex,gp.content,gp.placeHolder);
                     tempIndex += 1;
@@ -219,8 +224,8 @@ public class LanKzyDiaryEditor extends Fragment {
                     currentCol = 0;
                     currentRow += 1;
                 }
-                AddDiaryItem(currentRow,currentCol,gridParams.size(),null,null);
-                AddDeleteButton(currentRow,currentCol,gridParams.size(),null);
+                AddDiaryItem(currentRow,currentCol,gridParams.gridParamList.size(),null,null);
+                AddDeleteButton(currentRow,currentCol,gridParams.gridParamList.size(),null);
                 moreActionLayout.setVisibility(View.INVISIBLE);
             }
         });
@@ -240,7 +245,19 @@ public class LanKzyDiaryEditor extends Fragment {
                 moreActionLayout.setVisibility(View.INVISIBLE);
             }
         });
-        Calendar calendar = Calendar.getInstance();
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+8:00");
+        Calendar calendar = Calendar.getInstance(timeZone);
+        System.err.println(calendar.get(Calendar.HOUR_OF_DAY));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
+        int[] year = new int[1];
+        int[] month = new int[1];
+        int[] day = new int[1];
+        int[] hour = new int[1];
+        int[] minute = new int[1];
+        final String[] targetTime = {"0000-00-00 00:00"};
+
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,9 +267,30 @@ public class LanKzyDiaryEditor extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         year[0] = i;
-                        month[0] = i1;
+                        month[0] = i1 + 1;
                         day[0] = i2;
-                        System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
+
+                        targetTime[0] = "" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0];
+                        long t = 0;
+                        try{
+                            t = sdf.parse(targetTime[0]).getTime();
+                        }catch (Exception e){
+                            System.err.println("时间出问题了");
+                        }
+                        dataList.targetTime = t;
+                        gridParams.targetTime = t;
+                        Map<String,GridParams> dataList = LanKzy.getDataList();
+                        if(dataList.containsKey(HomePage.currentEditDate)){
+                            System.err.println("Replace " + HomePage.currentEditDate);
+                            System.err.println("Replace " + gridParams.targetTime);
+                            dataList.replace(HomePage.currentEditDate,gridParams);
+                        }else{
+                            System.err.println("Set " + HomePage.currentEditDate);
+                            System.err.println("Set " + gridParams.targetTime);
+                            dataList.put(HomePage.currentEditDate,gridParams);
+                        }
+                        LanKzy.SaveData(dataList);
+                        System.out.println("targetTime1 :" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
                     }
                 }
                         // 设置初始日期
@@ -265,7 +303,15 @@ public class LanKzyDiaryEditor extends Fragment {
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute1) {
                                 hour[0] = hourOfDay;
                                 minute[0] = minute1;
-                                System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
+
+                                long t = 0;
+                                try{
+                                    t = sdf.parse(targetTime[0]).getTime();
+                                }catch (Exception e){
+                                    System.err.println("时间出问题了");
+                                }
+                                dataList.targetTime = t;
+                                System.out.println("targetTime2 :" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
                             }
 
 
@@ -281,7 +327,7 @@ public class LanKzyDiaryEditor extends Fragment {
         });
     }
 
-    private void InitButtonScrollView(List<GridParams> dataList){
+    private void InitButtonScrollView(List<GridParam> dataList){
         buttonLayout.removeAllViews();
         buttonScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -292,13 +338,13 @@ public class LanKzyDiaryEditor extends Fragment {
         });
 //        scrollView.fullScroll(ScrollView.FOCUS_DOWN);滚动到底部
         if(dataList != null){
-            for(GridParams gp : dataList){
-                AddDeleteButton(gp.r,gp.c,gridParams.size(),gp);
+            for(GridParam gp : dataList){
+                AddDeleteButton(gp.r,gp.c,gp.index,gp);
             }
         }else{
             for(int r = 0;r < row;r++){
                 for(int c = 0;c < col;c++){
-                    AddDeleteButton(r,c,gridParams.size(),null);
+                    AddDeleteButton(r,c,gridParams.gridParamList.size(),null);
                 }
             }
         }
@@ -323,9 +369,9 @@ public class LanKzyDiaryEditor extends Fragment {
             }else{
                 placeHolder = "俺也8知道写点啥了";
             }
-            GridParams gp = new GridParams(placeHolder,"",r,c,index);
+            GridParam gp = new GridParam(placeHolder,"",r,c,index);
             //gp.SetIns(act);
-            gridParams.add(gp);
+            gridParams.gridParamList.add(gp);
         }
 
         currentRow = r;
@@ -369,7 +415,7 @@ public class LanKzyDiaryEditor extends Fragment {
         return act;
     }
 
-    private void AddDeleteButton(int r,int c,int index,GridParams gp){
+    private void AddDeleteButton(int r,int c,int index,GridParam gp){
         Button but = new Button(getContext());
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
@@ -397,18 +443,18 @@ public class LanKzyDiaryEditor extends Fragment {
     }
 
     //删除一个格子之后其他的重新排列 并且修改currentRow currentCol
-    private void OnDeleteGrid(int r, int c, int index, GridParams gp){
+    private void OnDeleteGrid(int r, int c, int index, GridParam gp){
         if(buttonLayout.getChildCount() > 0 && editorLayout.getChildCount() > 0){
             View buttonTarget = buttonLayout.getChildAt(r + c);
             View editorTarget = editorLayout.getChildAt(r + c);
             if(gp != null){
                 System.err.println("remove:" + gp.r + "," + gp.c);
-                gridParams.remove(gp);
+                gridParams.gridParamList.remove(gp);
             }
             buttonLayout.removeView(buttonTarget);
             editorLayout.removeView(editorTarget);
             Init(gridParams,true);
-            InitButtonScrollView(gridParams);
+            InitButtonScrollView(gridParams.gridParamList);
 //            System.err.println("删除：" + r + "," + c);
 //            System.err.println(currentRow + "," + currentCol);
 //            int startR = r;
@@ -459,10 +505,5 @@ public class LanKzyDiaryEditor extends Fragment {
 
         }
         //然后重置按钮点击事件
-    }
-
-    //重置按钮点击事件
-    private void ResetButton(){
-
     }
 }
