@@ -83,8 +83,6 @@ public class EditDiary extends Fragment {
                         day[0] = i2;
                         System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
                     }
-
-
                 }
                         // 设置初始日期
                         , calendar.get(Calendar.YEAR)

@@ -101,7 +101,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
         //DiaryData data = LanKzy.GetData();
         //GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
 
-//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 //        if(data != null){
 //            DiaryAdapter adapter = new DiaryAdapter(data.dataList);
 //            System.err.println("Set Adapter");

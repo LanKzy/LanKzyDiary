@@ -1,14 +1,18 @@
 package com.example.soul_searching.ui;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -21,6 +25,7 @@ import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +62,7 @@ public class LanKzyDiaryEditor extends Fragment {
     private Button addGrid;
     private Button editGrid;
     private Button importImage;
+    private Button setTime;
 
     private String[] tempPlaceholder;
 
@@ -117,6 +123,7 @@ public class LanKzyDiaryEditor extends Fragment {
         addGrid = rootView.findViewById(R.id.add_grid);
         editGrid = rootView.findViewById(R.id.edit_grid);
         importImage = rootView.findViewById(R.id.import_image);
+        setTime = rootView.findViewById(R.id.set_time);
 
         gridParams = new ArrayList<GridParams>();
 
@@ -231,6 +238,45 @@ public class LanKzyDiaryEditor extends Fragment {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
+            }
+        });
+        Calendar calendar = Calendar.getInstance();
+        setTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + day[0] + ":" + hour[0] + ":" + minute[0]);
+
+                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        year[0] = i;
+                        month[0] = i1;
+                        day[0] = i2;
+                        System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
+                    }
+                }
+                        // 设置初始日期
+                        , calendar.get(Calendar.YEAR)
+                        , calendar.get(Calendar.MONTH)
+                        , calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new TimePickerDialog( getActivity(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute1) {
+                                hour[0] = hourOfDay;
+                                minute[0] = minute1;
+                                System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
+                            }
+
+
+                        }
+                        // 设置初始时间
+                        , calendar.get(Calendar.HOUR_OF_DAY)
+                        , calendar.get(Calendar.MINUTE)
+                        // true表示采用24小时制
+                        ,true).show();
+                //string date = "xxxx-xx-xx xx:xx:xx";
+                //
             }
         });
     }
