@@ -2,12 +2,8 @@ package com.example.soul_searching;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -122,28 +118,28 @@ public class MainActivity extends AppCompatActivity {
 
         ConstraintLayout passwordContainer = findViewById(R.id.main_password_container);
 
-        if(LanKzy.GetPassword() != null){
-            System.err.println(LanKzy.GetPassword());
-            Button passwordCheck = findViewById(R.id.password_check);
-            EditText password = findViewById(R.id.main_password_input);
-            ColorStateList color = password.getTextColors();
-
-            password.bringToFront();
-            passwordCheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(password.getText().toString().equals(LanKzy.GetPassword().toString())){
-                        passwordContainer.setVisibility(View.INVISIBLE);
-                        password.setTextColor(color);
-                        password.setText("");
-                    }else{
-                        password.setTextColor(Color.parseColor("#FFFF0000"));
-                    }
-                }
-            });
-        }else{
+//        if(LanKzy.GetPassword() != null){
+//            System.err.println(LanKzy.GetPassword());
+//            Button passwordCheck = findViewById(R.id.password_check);
+//            EditText password = findViewById(R.id.main_password_input);
+//            ColorStateList color = password.getTextColors();
+//
+//            password.bringToFront();
+//            passwordCheck.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if(password.getText().toString().equals(LanKzy.GetPassword().toString())){
+//                        passwordContainer.setVisibility(View.INVISIBLE);
+//                        password.setTextColor(color);
+//                        password.setText("");
+//                    }else{
+//                        password.setTextColor(Color.parseColor("#FFFF0000"));
+//                    }
+//                }
+//            });
+//        }else{
             passwordContainer.setVisibility(View.INVISIBLE);
-        }
+//        }
 //        for (int i = 0;i < 3;i++){
 //            System.err.println(i);
 //            Fragment f = new DiaryGirdItem();

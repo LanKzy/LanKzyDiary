@@ -4,18 +4,25 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Environment;
 
 import androidx.core.app.ActivityCompat;
 
 import com.example.soul_searching.MainActivity;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,4 +158,35 @@ public class LanKzy {
             System.err.println("啦啦啦~~~" + e);
         }
     }
+
+    public static void SaveImage(GridParams gp,String fileName){
+
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + ".jpg");
+        int w = 512;
+        int h = 1024;
+        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Canvas c = new Canvas(bmp);
+        //bmp.compress()
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(16);
+
+        int x = 10;
+        int y = 10;
+        for(GridParam g:gp.gridParamList){
+            c.drawText(g.placeHolder, x, y, paint);
+            y += h / 8 / 2;
+            c.drawText(g.content, x, y, paint);
+            y += h / 8;
+        }
+        try {
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+            System.err.println("save Image:" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + fileName + ".jpg");
+            bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+

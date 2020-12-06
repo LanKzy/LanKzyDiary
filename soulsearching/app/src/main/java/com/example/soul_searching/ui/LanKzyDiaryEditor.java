@@ -245,6 +245,7 @@ public class LanKzyDiaryEditor extends Fragment {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
+                LanKzy.SaveImage(dataList,HomePage.currentEditDate);
             }
         });
         TimeZone timeZone = TimeZone.getTimeZone("GMT+8:00");
@@ -263,6 +264,7 @@ public class LanKzyDiaryEditor extends Fragment {
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                moreActionLayout.setVisibility(View.INVISIBLE);
                 System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + day[0] + ":" + hour[0] + ":" + minute[0]);
 
                 new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -331,6 +333,7 @@ public class LanKzyDiaryEditor extends Fragment {
         setPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                moreActionLayout.setVisibility(View.INVISIBLE);
                 NavController nc = Navigation.findNavController(view);
                 nc.navigate(R.id.action_lanKzyDiaryEditor_to_lanKzyPasswordEditor);
             }
