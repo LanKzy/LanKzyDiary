@@ -12,45 +12,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:id="@+id/button10"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="match_parent"
-        android:layout_height="597dp"
-        android:background="#EFEAEA"
-        android:backgroundTint="#FFFFFF"
-        android:outlineAmbientShadowColor="#FFFFFF"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#230606"
-        android:textColorHint="#590404"
-        android:visibility="gone"
-        app:strokeColor="#FFF7F7"
-        tools:visibility="visible" />
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/main_bottom"
-        android:layout_width="450dp"
-        android:layout_height="224dp"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:translationY="580dp"
-        android:visibility="visible"
-        tools:visibility="visible">
-
-        <TextView
-            android:id="@+id/bottom_current_date"
-            android:layout_width="238dp"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <Button
-            android:id="@+id/button_my_diary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="俺的日记"
-            android:translationY="50dp" />
-    </com.google.android.material.navigation.NavigationView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -195,6 +156,89 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.593" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/main_bottom"
+        android:layout_width="450dp"
+        android:layout_height="224dp"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:translationY="580dp"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/button_my_diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="俺的日记"
+            android:translationY="50dp" />
+
+        <TextView
+            android:id="@+id/bottom_current_date"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </com.google.android.material.navigation.NavigationView>
+
+    <Button
+        android:id="@+id/button10"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="match_parent"
+        android:layout_height="597dp"
+        android:background="#EFEAEA"
+        android:backgroundTint="#FFFFFF"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#230606"
+        android:textColorHint="#590404"
+        android:visibility="gone"
+        app:strokeColor="#FFF7F7"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_password_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="431dp"
+            android:layout_height="762dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="222dp"
+            android:layout_height="30dp"
+            android:background="#857979"
+            android:text="验证一下密码呗"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.16000003" />
+
+        <EditText
+            android:id="@+id/main_password_input"
+            android:layout_width="334dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

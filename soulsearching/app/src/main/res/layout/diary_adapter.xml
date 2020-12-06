@@ -1,4 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/appWidgetBackgroundColor"
@@ -11,8 +13,9 @@
         android:layout_height="111dp"
         android:background="?attr/appWidgetBackgroundColor"
         android:contentDescription="@string/appwidget_text"
-        android:text="ASasASasFASF\nasdasd\nasd"
+        android:text="aaa"
         android:textColor="?attr/appWidgetTextColor"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
+
 </RelativeLayout>

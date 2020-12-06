@@ -1,16 +1,23 @@
 package com.example.soul_searching.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -179,6 +186,53 @@ public class HomePage extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+
+        ConstraintLayout passwordContainer = rootView.findViewById(R.id.main_password_container);
+        //密码这里来的
+        passwordContainer.setVisibility(View.VISIBLE);
+        String password_s = LanKzy.GetPassword();
+        System.err.println(password_s.equals(""));
+        //然后在这判断  这个条件说明有密码  显示那个验证密码的窗口
+        if(password_s != null && !password_s.equals("")){
+            System.err.println(LanKzy.GetPassword() + "==============验证密码");
+            //Button passwordCheck = rootView.findViewById(R.id.password_check);
+            EditText password = rootView.findViewById(R.id.main_password_input);
+            //ColorStateList color = password.getTextColors();
+            password.bringToFront();
+            password.setTextColor(Color.WHITE);
+            password.setBackgroundColor(Color.DKGRAY);
+
+            password.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    System.err.println(editable.toString());
+                    if(password_s.equals(editable.toString())){
+                        passwordContainer.setVisibility(View.INVISIBLE);
+                        password.setText("");
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        // 隐藏软键盘
+                        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
+                    }else{
+                        password.setTextColor(Color.parseColor("#FFFF0000"));
+                    }
+                }
+            });
+
+        }else{
+            //没有密码就把那个窗口隐藏
+            System.err.println("set password invisible");
+            passwordContainer.setVisibility(View.INVISIBLE);
+        }
 
     }
     private NotificationCompat.Builder GetBuilder(){
