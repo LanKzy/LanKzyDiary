@@ -65,6 +65,7 @@ public class LanKzyDiaryEditor extends Fragment {
     private Button editGrid;
     private Button importImage;
     private Button setTime;
+    private Button setPassword;
 
     private String[] tempPlaceholder;
 
@@ -126,6 +127,7 @@ public class LanKzyDiaryEditor extends Fragment {
         editGrid = rootView.findViewById(R.id.edit_grid);
         importImage = rootView.findViewById(R.id.import_image);
         setTime = rootView.findViewById(R.id.set_time);
+        setPassword = rootView.findViewById(R.id.set_password);
 
         gridParams = new GridParams();
         gridParams.gridParamList = new ArrayList<GridParam>();
@@ -323,6 +325,14 @@ public class LanKzyDiaryEditor extends Fragment {
                         ,true).show();
                 //string date = "xxxx-xx-xx xx:xx:xx";
                 //
+            }
+        });
+
+        setPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController nc = Navigation.findNavController(view);
+                nc.navigate(R.id.action_lanKzyDiaryEditor_to_lanKzyPasswordEditor);
             }
         });
     }

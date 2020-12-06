@@ -13,6 +13,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation" />
 
@@ -22,10 +23,40 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:visibility="gone"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer">
 
     </com.google.android.material.navigation.NavigationView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_password_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/password_check"
+            android:layout_width="416dp"
+            android:layout_height="769dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/main_password_input"
+            android:layout_width="319dp"
+            android:layout_height="52dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

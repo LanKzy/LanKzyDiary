@@ -13,6 +13,7 @@ import com.example.soul_searching.MainActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -106,6 +107,48 @@ public class LanKzy {
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
+        }
+    }
+
+    public static String GetPassword(){
+        String password = "";
+
+        FileReader fr = null;
+        verifyStoragePermissions(MainActivity.Ins);
+        try {
+            ContextWrapper cw = new ContextWrapper(MainActivity.Ins.getApplicationContext());
+            File directory = cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+            fr = new FileReader(directory + "/password");
+            int tempChar = 0;
+            while((tempChar = fr.read()) != -1 ){
+                password += (char)tempChar;
+            }
+
+            fr.close();
+        } catch (Exception e) {
+            System.err.println("初始化密码失败");
+            System.err.println(e);
+        }
+        return password;
+    }
+
+    public static void SetPassword(String password){
+        FileOutputStream fos = null;
+        verifyStoragePermissions(MainActivity.Ins);
+        //if(state.equals(Environment.MEDIA_MOUNTED)){
+        System.err.println(file);
+        System.err.println(path);
+        try {
+            ContextWrapper cw = new ContextWrapper(MainActivity.Ins.getApplicationContext());
+            File directory = cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+            File file = new File(directory, "password");
+            fos = new FileOutputStream(file,false);
+            fos.write(password.getBytes());
+            fos.flush();
+            fos.close();
+
+        } catch (Exception e) {
+            System.err.println("啦啦啦~~~" + e);
         }
     }
 }

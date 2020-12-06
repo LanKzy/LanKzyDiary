@@ -88,7 +88,7 @@
         <LinearLayout
             android:id="@+id/linearLayout_more_action"
             android:layout_width="145dp"
-            android:layout_height="195dp"
+            android:layout_height="231dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +120,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="定时提醒" />
+
+            <Button
+                android:id="@+id/set_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设置密码" />
 
         </LinearLayout>
 

@@ -57,12 +57,20 @@
         <action
             android:id="@+id/action_lanKzyDiaryEditor_to_lanKzyChildEditor"
             app:destination="@id/lanKzyChildEditor" />
+        <action
+            android:id="@+id/action_lanKzyDiaryEditor_to_lanKzyPasswordEditor"
+            app:destination="@id/lanKzyPasswordEditor" />
     </fragment>
     <fragment
         android:id="@+id/lanKzyChildEditor"
         android:name="com.example.soul_searching.ui.LanKzyChildEditor"
         android:label="fragment_lankzy_child_editor"
         tools:layout="@layout/fragment_lankzy_child_editor" />
+    <fragment
+        android:id="@+id/lanKzyPasswordEditor"
+        android:name="com.example.soul_searching.ui.LanKzyPasswordEditor"
+        android:label="fragment_lankzy_password_editor"
+        tools:layout="@layout/fragment_lankzy_password_editor" />
 
 
 </navigation>
