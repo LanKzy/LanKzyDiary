@@ -118,8 +118,10 @@ public class LanKzy {
     }
 
     public static String GetPassword(){
+        //拿不到返回的是这个
         String password = "";
-
+        //存的指定路径     cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + /password
+        //拿的到就返回密码
         FileReader fr = null;
         verifyStoragePermissions(MainActivity.Ins);
         try {
@@ -136,6 +138,7 @@ public class LanKzy {
             System.err.println("初始化密码失败");
             System.err.println(e);
         }
+        //这里返回
         return password;
     }
 
@@ -160,21 +163,26 @@ public class LanKzy {
     }
 
     public static void SaveImage(GridParams gp,String fileName){
-
+        //图片路径
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + ".jpg");
         int w = 512;
         int h = 1024;
+        //整一个图片出来
         Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+//        画笔
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        画布
         Canvas c = new Canvas(bmp);
         //bmp.compress()
         paint.setColor(Color.WHITE);
         paint.setTextSize(16);
-
+//设置一些参数
         int x = 10;
         int y = 10;
+        //然后根据数据画在画布上
         for(GridParam g:gp.gridParamList){
             c.drawText(g.placeHolder, x, y, paint);
+            //设置一个偏移  要不都画一起了
             y += h / 8 / 2;
             c.drawText(g.content, x, y, paint);
             y += h / 8;
@@ -182,6 +190,7 @@ public class LanKzy {
         try {
             OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
             System.err.println("save Image:" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + fileName + ".jpg");
+            //画完了保存
             bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

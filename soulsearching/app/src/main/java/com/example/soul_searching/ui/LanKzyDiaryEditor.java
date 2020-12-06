@@ -2,6 +2,7 @@ package com.example.soul_searching.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class LanKzyDiaryEditor extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private int row = 3;
+    private int row = 2;
     private int col = 2;
 
     // TODO: Rename and change types of parameters
@@ -191,17 +192,19 @@ public class LanKzyDiaryEditor extends Fragment {
                         tempC = 0;
                         tempR += 1;
                     }
+                    gp.index = tempIndex;
                     tempIndex += 1;
                 }
             }else{
                 for(GridParam gp : dataList.gridParamList){
                     System.err.println(gp.content + "============");
                     AddDiaryItem(gp.r,gp.c,tempIndex,gp.content,gp.placeHolder);
+                    gp.index = tempIndex;
                     tempIndex += 1;
                 }
             }
         }else{
-            for(int r = 0;r < 4;r++){
+            for(int r = 0;r < row;r++){
                 for(int c = 0;c < col;c++){
                     AddDiaryItem(r,c,tempIndex,null,null);
                     tempIndex += 1;
@@ -217,6 +220,8 @@ public class LanKzyDiaryEditor extends Fragment {
             }
         });
 
+        //添加一个格子       随便塞点东西 然后给扔到最后
+        //按钮的排列用的是 GridView 这个东西设置行号之后  就会自动排列
         addGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,10 +246,13 @@ public class LanKzyDiaryEditor extends Fragment {
             }
         });
 
+//        导出图片
         importImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
+                //这里直接用的日期去缓存里拿数据然后生成图片
+
                 LanKzy.SaveImage(dataList,HomePage.currentEditDate);
             }
         });
@@ -254,6 +262,7 @@ public class LanKzyDiaryEditor extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 
+        //时间设置完了用这个数组来取
         int[] year = new int[1];
         int[] month = new int[1];
         int[] day = new int[1];
@@ -261,23 +270,28 @@ public class LanKzyDiaryEditor extends Fragment {
         int[] minute = new int[1];
         final String[] targetTime = {"0000-00-00 00:00"};
 
+
+        //定时器
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moreActionLayout.setVisibility(View.INVISIBLE);
                 System.out.println(year[0] + "-" + month[0] + "-" + day[0] + " " + day[0] + ":" + hour[0] + ":" + minute[0]);
-
+                //这两个new  一个是选择年月日  一个是时分
                 new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         year[0] = i;
                         month[0] = i1 + 1;
                         day[0] = i2;
-
+                        //拼接一个字符串   "0000-00-00 00:00"
+//                        用这个格式
                         targetTime[0] = "" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0];
                         long t = 0;
                         try{
+                            //到这格式化成时间戳
                             t = sdf.parse(targetTime[0]).getTime();
+                            //保存的就是这个东西  1607259900000
                         }catch (Exception e){
                             System.err.println("时间出问题了");
                         }
@@ -293,6 +307,7 @@ public class LanKzyDiaryEditor extends Fragment {
                             System.err.println("Set " + gridParams.targetTime);
                             dataList.put(HomePage.currentEditDate,gridParams);
                         }
+//                        因为年月日是后出来的 所以保存数据在这里就可以
                         LanKzy.SaveData(dataList);
                         System.out.println("targetTime1 :" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
                     }
@@ -351,10 +366,15 @@ public class LanKzyDiaryEditor extends Fragment {
         });
 //        scrollView.fullScroll(ScrollView.FOCUS_DOWN);滚动到底部
         if(dataList != null){
+            //有数据就根据数据的个数和信息来生成按钮
+            int index = 0;
             for(GridParam gp : dataList){
-                AddDeleteButton(gp.r,gp.c,gp.index,gp);
+                System.err.println("index ===========" + index);
+                AddDeleteButton(gp.r,gp.c,index,gp);
+                index++;
             }
         }else{
+            //这是没有数据  默认的样式
             for(int r = 0;r < row;r++){
                 for(int c = 0;c < col;c++){
                     AddDeleteButton(r,c,gridParams.gridParamList.size(),null);
@@ -390,7 +410,10 @@ public class LanKzyDiaryEditor extends Fragment {
         currentRow = r;
         currentCol = c;
         act.setHeight(500);
+        //额  是GridLayout
+        //行
         GridLayout.Spec rowSpec = GridLayout.spec(r, 1.0f);
+        //列
         GridLayout.Spec columnSpec = GridLayout.spec(c, 1.0f);;
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
         System.err.println(placeHolder + "========" + r + "," + c);
@@ -423,6 +446,7 @@ public class LanKzyDiaryEditor extends Fragment {
         });
         placeHolder += "\n" + content;
         act.setText(placeHolder);
+        //在这添加进去
         editorLayout.addView(act,params);
         //g.addView(but,params);
         return act;
@@ -442,15 +466,17 @@ public class LanKzyDiaryEditor extends Fragment {
         params1.width = 500;
         int finalR = r;
         int finalC = c;
+        //每一个删除按钮的点击事件
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                buttonLayout.removeViewAt(finalR + finalC);
 //                editorLayout.removeViewAt(finalR + finalC);
+                System.err.println("删除格子：" + index);
                 OnDeleteGrid(finalR,finalC,index,gp);
             }
         });
-
+        but.setBackgroundColor(Color.BLACK);
         cl.addView(but,params);
         buttonLayout.addView(cl,params1);
     }
@@ -460,12 +486,16 @@ public class LanKzyDiaryEditor extends Fragment {
         if(buttonLayout.getChildCount() > 0 && editorLayout.getChildCount() > 0){
             View buttonTarget = buttonLayout.getChildAt(r + c);
             View editorTarget = editorLayout.getChildAt(r + c);
+            //会把这个按钮在缓存里对应下标的数据和展示界面的按钮都删掉
             if(gp != null){
                 System.err.println("remove:" + gp.r + "," + gp.c);
+                System.err.println("remove: " + gp.placeHolder + "====" + gp.content);
                 gridParams.gridParamList.remove(gp);
             }
             buttonLayout.removeView(buttonTarget);
             editorLayout.removeView(editorTarget);
+            //然后再重新加载一遍
+            //但是这删除之后在 再编辑有bug  在编辑的下标不对  差了一位
             Init(gridParams,true);
             InitButtonScrollView(gridParams.gridParamList);
 //            System.err.println("删除：" + r + "," + c);

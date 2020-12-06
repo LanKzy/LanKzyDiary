@@ -2,8 +2,12 @@ package com.example.soul_searching;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 //        startService();
 
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //现在这创建通知的通道
         createNotificationChannel("1","倒计时结束",3);
 
 //        Notification notification = new NotificationCompat.Builder(this, "1")
@@ -117,29 +122,34 @@ public class MainActivity extends AppCompatActivity {
         System.err.println("MainActivity3");
 
         ConstraintLayout passwordContainer = findViewById(R.id.main_password_container);
+        //密码这里来的
+        String password_s = LanKzy.GetPassword();
+        System.err.println(password_s.equals(""));
+        //然后在这判断  这个条件说明有密码  显示那个验证密码的窗口
+        if(password_s != null && !password_s.equals("")){
+            System.err.println(LanKzy.GetPassword() + "==============验证密码");
+            Button passwordCheck = findViewById(R.id.password_check);
+            EditText password = findViewById(R.id.main_password_input);
+            ColorStateList color = password.getTextColors();
 
-//        if(LanKzy.GetPassword() != null){
-//            System.err.println(LanKzy.GetPassword());
-//            Button passwordCheck = findViewById(R.id.password_check);
-//            EditText password = findViewById(R.id.main_password_input);
-//            ColorStateList color = password.getTextColors();
-//
-//            password.bringToFront();
-//            passwordCheck.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(password.getText().toString().equals(LanKzy.GetPassword().toString())){
-//                        passwordContainer.setVisibility(View.INVISIBLE);
-//                        password.setTextColor(color);
-//                        password.setText("");
-//                    }else{
-//                        password.setTextColor(Color.parseColor("#FFFF0000"));
-//                    }
-//                }
-//            });
-//        }else{
+            password.bringToFront();
+            passwordCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(password.getText().toString().equals(LanKzy.GetPassword().toString())){
+                        passwordContainer.setVisibility(View.INVISIBLE);
+                        password.setTextColor(color);
+                        password.setText("");
+                    }else{
+                        password.setTextColor(Color.parseColor("#FFFF0000"));
+                    }
+                }
+            });
+        }else{
+            //没有密码就把那个窗口隐藏
+            System.err.println("set password invisible");
             passwordContainer.setVisibility(View.INVISIBLE);
-//        }
+        }
 //        for (int i = 0;i < 3;i++){
 //            System.err.println(i);
 //            Fragment f = new DiaryGirdItem();

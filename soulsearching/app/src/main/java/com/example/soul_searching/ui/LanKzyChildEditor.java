@@ -138,7 +138,7 @@ public class LanKzyChildEditor extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 content = s.toString();
-                System.err.println(index);
+                System.err.println(index + " child index");
                 SaveData();
             }
         });
@@ -148,6 +148,7 @@ public class LanKzyChildEditor extends Fragment {
     private void SaveData(){
         GridParams gridParamsList = parent.getGridParams();
         for(GridParam gp:gridParamsList.gridParamList){
+            System.err.println(gp.index + "==========" + index);
             if(gp.index == index){
                 gp.placeHolder = placeHolder;
                 gp.content = content;

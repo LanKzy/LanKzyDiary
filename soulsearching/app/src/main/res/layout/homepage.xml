@@ -23,6 +23,7 @@
         android:textColor="#FFFFFF"
         android:textColorHighlight="#230606"
         android:textColorHint="#590404"
+        android:visibility="gone"
         app:strokeColor="#FFF7F7"
         tools:visibility="visible" />
 

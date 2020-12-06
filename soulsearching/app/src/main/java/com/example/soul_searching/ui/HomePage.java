@@ -121,8 +121,10 @@ public class HomePage extends Fragment implements View.OnClickListener {
 //        }
         long current = System.currentTimeMillis();
         System.err.println(LanKzy.getDataList().size());
+        //设置的时间会在这个页面加载的时候去判断是否需要计时
         for(GridParams gp : LanKzy.getDataList().values()){
             long target = gp.targetTime;
+
             if(current > target){
                 //无需计时
                 System.err.println("无需计时:" + current + "========" + target);
@@ -130,6 +132,8 @@ public class HomePage extends Fragment implements View.OnClickListener {
             }
 
             final NotificationCompat.Builder builder = GetBuilder();
+            //需要计时创建CountDownTimer
+            //
             CountDownTimer cdt = new CountDownTimer(target - current,1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -140,6 +144,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
                 @Override
                 public void onFinish() {
                     //这里弹窗
+                    //弹窗需要做一些初始化                   和创建的对应
                     MainActivity.Ins.getManager().notify(1,builder.build());
                     Intent i = new Intent(MainActivity.Ins, TimerService.class);
                     //c.stopService(i);
@@ -177,6 +182,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
     }
     private NotificationCompat.Builder GetBuilder(){
+        //这里定义弹窗的样式
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "1")
                 .setAutoCancel(true)
                 .setContentTitle("弹窗标题")
