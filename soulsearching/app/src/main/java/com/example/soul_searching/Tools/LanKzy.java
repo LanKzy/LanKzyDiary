@@ -38,7 +38,7 @@ public class LanKzy {
     private static Map<String,GridParams> dataList;
 
     public static String[] placeHolder = new String[]{
-        "今天天气","今天吃啥","玩啥游戏","看啥电影","诶嘿嘿~","耶耶耶"
+        "心情怎么样","what is the weather today？","今日花费","special thing？","done thing？","today's mistake？"
     };
 
     // Storage Permissions

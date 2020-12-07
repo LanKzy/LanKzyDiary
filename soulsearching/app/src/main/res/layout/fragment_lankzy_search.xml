@@ -17,8 +17,8 @@
             android:layout_width="405dp"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="question"
             android:inputType="textPersonName"
-            android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,22 +28,26 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="398dp"
-            android:layout_height="500dp"
-            android:text="TextView"
+            android:layout_height="631dp"
+            android:hint="answer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_con" />
+            app:layout_constraintTop_toBottomOf="@+id/search_con"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/button11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
+            android:layout_width="409dp"
+            android:layout_height="51dp"
+            android:text="searching"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.88"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_con" />
+            app:layout_constraintTop_toBottomOf="@+id/search_con"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
