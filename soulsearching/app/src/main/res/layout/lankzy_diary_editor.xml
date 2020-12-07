@@ -88,7 +88,7 @@
         <LinearLayout
             android:id="@+id/linearLayout_more_action"
             android:layout_width="145dp"
-            android:layout_height="231dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
                 android:id="@+id/edit_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="编辑格子" />
+                android:text="删除格子" />
 
             <Button
                 android:id="@+id/import_image"
@@ -119,13 +119,19 @@
                 android:id="@+id/set_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="定时提醒" />
+                android:text="设置提醒" />
 
             <Button
                 android:id="@+id/set_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="设置密码" />
+                android:text="安全锁" />
+
+            <Button
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="搜索" />
 
         </LinearLayout>
 
