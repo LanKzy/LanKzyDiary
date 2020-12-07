@@ -1,29 +1,50 @@
 package com.example.soul_searching.Tools;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchData {
-    private Map<String,SearchData> child;
 
-    public Map<String, SearchData> getChild() {
-        return child == null ? new HashMap<String,SearchData>() : child;
+    public Character node;
+
+    public List<SearchData> child;
+
+    public List<DiaryData> diaryDataList;
+
+    public int depth;
+
+    public SearchData(int depth){
+        child = new ArrayList<SearchData>();
+        this.depth = depth;
     }
 
-    public void setChild(Map<String, SearchData> child) {
-        this.child = child;
-    }
+    public List<DiaryData> getData(char[] c,int cIndex){
+        System.err.println("get data" + c + ",,,");
 
-    public void SetData(String s,int index){
         if(child == null){
-            child = new HashMap<String,SearchData>();
+            return null;
         }
-
-        for(int i = 0;i < index + 1;i++){
-
+        for(SearchData sd : child){
+            System.err.println(sd.node);
+            if(c.length == sd.depth && sd.node == c[cIndex]){
+                System.err.println("return data");
+                System.err.println(sd.diaryDataList + "============");
+                return sd.diaryDataList;
+            }
+            if(depth - 1 == cIndex){
+                break;
+            }
+            if(sd.node == c[cIndex]){
+                System.err.println(sd.node + "," + c);
+                return sd.getData(c,cIndex + 1);
+            }
         }
-        if(child.containsKey(s)){
+        return null;
+    }
 
-        }
+    public static class DiaryData{
+        public List<String> content;
+        public List<String> date;
     }
 }
+

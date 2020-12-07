@@ -54,6 +54,7 @@ public class HomePage extends Fragment implements View.OnClickListener {
     public static String currentEditDate;
     public static String currentEditDow;
 
+
     private String[] dow = {"日","一","二","三","四","五","六"};
 
 

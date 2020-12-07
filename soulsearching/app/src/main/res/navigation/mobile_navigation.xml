@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_lanKzyDiaryEditor_to_lanKzyPasswordEditor"
             app:destination="@id/lanKzyPasswordEditor" />
+        <action
+            android:id="@+id/action_lanKzyDiaryEditor_to_lanKzySearch"
+            app:destination="@id/lanKzySearch" />
     </fragment>
     <fragment
         android:id="@+id/lanKzyChildEditor"
@@ -71,6 +74,11 @@
         android:name="com.example.soul_searching.ui.LanKzyPasswordEditor"
         android:label="fragment_lankzy_password_editor"
         tools:layout="@layout/fragment_lankzy_password_editor" />
+    <fragment
+        android:id="@+id/lanKzySearch"
+        android:name="com.example.soul_searching.ui.LanKzySearch"
+        android:label="fragment_lankzy_search"
+        tools:layout="@layout/fragment_lankzy_search" />
 
 
 </navigation>

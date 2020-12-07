@@ -24,7 +24,6 @@ import com.example.soul_searching.R;
 import com.example.soul_searching.Tools.GridParam;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
-import com.example.soul_searching.Tools.SearchData;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +67,7 @@ public class LanKzyDiaryEditor extends Fragment {
     private Button importImage;
     private Button setTime;
     private Button setPassword;
+    private Button search;
 
     private String[] tempPlaceholder;
 
@@ -116,7 +116,6 @@ public class LanKzyDiaryEditor extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.lankzy_diary_editor, container, false);
-
         editorDate = rootView.findViewById(R.id.editor_date);
         buttonScrollView = rootView.findViewById(R.id.button_scrollview);
         editorScrollView = rootView.findViewById(R.id.editor_scrollview);
@@ -130,6 +129,7 @@ public class LanKzyDiaryEditor extends Fragment {
         importImage = rootView.findViewById(R.id.import_image);
         setTime = rootView.findViewById(R.id.set_time);
         setPassword = rootView.findViewById(R.id.set_password);
+        search = rootView.findViewById(R.id.search);
 
         gridParams = new GridParams();
         gridParams.gridParamList = new ArrayList<GridParam>();
@@ -255,6 +255,16 @@ public class LanKzyDiaryEditor extends Fragment {
                 //这里直接用的日期去缓存里拿数据然后生成图片
 
                 LanKzy.SaveImage(dataList,HomePage.currentEditDate);
+            }
+        });
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //点击搜索按钮
+                //跳转到关键词输入界面
+                NavController nc = Navigation.findNavController(view);
+                nc.navigate(R.id.action_lanKzyDiaryEditor_to_lanKzySearch);
             }
         });
         TimeZone timeZone = TimeZone.getTimeZone("GMT+8:00");
@@ -553,14 +563,14 @@ public class LanKzyDiaryEditor extends Fragment {
 
     public void onClickSearch(Map<String,GridParams> dataList,String keyWord){
         //转换数据格式
-        SearchData sd = new SearchData();
-        for(GridParams gps:dataList.values()){
-            for(GridParam gp : gps.gridParamList){
-                char[] chars = gp.placeHolder.toCharArray();
-                for(int i1 = 0;i1 < chars.length;i1++){
-                    sd.SetData(chars.toString());
-                }
-            }
-        }
+//        SearchData sd = new SearchData();
+//        for(GridParams gps:dataList.values()){
+//            for(GridParam gp : gps.gridParamList){
+//                char[] chars = gp.placeHolder.toCharArray();
+//                for(int i1 = 0;i1 < chars.length;i1++){
+//                    //sd.SetData(chars.toString());
+//                }
+//            }
+//        }
     }
 }
