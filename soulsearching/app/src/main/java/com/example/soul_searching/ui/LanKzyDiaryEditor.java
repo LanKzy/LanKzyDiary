@@ -24,6 +24,7 @@ import com.example.soul_searching.R;
 import com.example.soul_searching.Tools.GridParam;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
+import com.example.soul_searching.Tools.SearchData;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -548,5 +549,18 @@ public class LanKzyDiaryEditor extends Fragment {
 
         }
         //然后重置按钮点击事件
+    }
+
+    public void onClickSearch(Map<String,GridParams> dataList,String keyWord){
+        //转换数据格式
+        SearchData sd = new SearchData();
+        for(GridParams gps:dataList.values()){
+            for(GridParam gp : gps.gridParamList){
+                char[] chars = gp.placeHolder.toCharArray();
+                for(int i1 = 0;i1 < chars.length;i1++){
+                    sd.SetData(chars.toString());
+                }
+            }
+        }
     }
 }
