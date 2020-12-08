@@ -242,8 +242,8 @@ public class HomePage extends Fragment implements View.OnClickListener {
         //这里定义弹窗的样式
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "1")
                 .setAutoCancel(true)
-                .setContentTitle("弹窗标题")
-                .setContentText("弹窗内容")
+                .setContentTitle("提醒")
+                .setContentText("该填今日份的格子了")
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));

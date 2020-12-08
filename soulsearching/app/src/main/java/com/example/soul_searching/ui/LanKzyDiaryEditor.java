@@ -222,7 +222,7 @@ public class LanKzyDiaryEditor extends Fragment {
         });
 
         //添加一个格子       随便塞点东西 然后给扔到最后
-        //按钮的排列用的是 GridView 这个东西设置行号之后  就会自动排列
+        //排列用的是 GridView 这个东西设置行号之后  就会自动排列
         addGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,7 +303,7 @@ public class LanKzyDiaryEditor extends Fragment {
                         try{
                             //到这格式化成时间戳
                             t = sdf.parse(targetTime[0]).getTime();
-                            //保存的就是这个东西  1607259900000
+                            //保存的就是
                         }catch (Exception e){
                             System.err.println("时间出问题了");
                         }
@@ -319,7 +319,7 @@ public class LanKzyDiaryEditor extends Fragment {
                             System.err.println("Set " + gridParams.targetTime);
                             dataList.put(HomePage.currentEditDate,gridParams);
                         }
-//                        因为年月日是后出来的 所以保存数据在这里就可以
+//                        年月日是后出来的 保存数据在这里
                         LanKzy.SaveData(dataList);
                         System.out.println("targetTime1 :" + year[0] + "-" + month[0] + "-" + day[0] + " " + hour[0] + ":" + minute[0]);
                     }
@@ -412,7 +412,7 @@ public class LanKzyDiaryEditor extends Fragment {
                 }
                 tempPlaceholder = newArray;
             }else{
-                placeHolder = "俺也8知道写点啥了";
+                placeHolder = "record something";
             }
             GridParam gp = new GridParam(placeHolder,"",r,c,index);
             //gp.SetIns(act);
@@ -422,7 +422,7 @@ public class LanKzyDiaryEditor extends Fragment {
         currentRow = r;
         currentCol = c;
         act.setHeight(500);
-        //额  是GridLayout
+        //GridLayout
         //行
         GridLayout.Spec rowSpec = GridLayout.spec(r, 1.0f);
         //列
@@ -507,7 +507,6 @@ public class LanKzyDiaryEditor extends Fragment {
             buttonLayout.removeView(buttonTarget);
             editorLayout.removeView(editorTarget);
             //然后再重新加载一遍
-            //但是这删除之后在 再编辑有bug  在编辑的下标不对  差了一位
             Init(gridParams,true);
             InitButtonScrollView(gridParams.gridParamList);
 //            System.err.println("删除：" + r + "," + c);

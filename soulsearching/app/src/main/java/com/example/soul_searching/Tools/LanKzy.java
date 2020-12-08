@@ -32,7 +32,7 @@ public class LanKzy {
 
     private static String path;
 
-    //缓存直接获取这个就行
+    //缓存直接获取这个
     public static Map<String,GridParams> getDataList() {
         return dataList;
     }
@@ -42,7 +42,7 @@ public class LanKzy {
     private static Map<String,CountDownTimer> sdts;
 
     public static String[] placeHolder = new String[]{
-        "心情怎么样","what is the weather today？","今日花费","special thing？","done thing？","today's mistake？"
+        "mood?","weather？","cost?","anything special？","done？","mistake？"
     };
 
     // Storage Permissions
@@ -123,7 +123,7 @@ public class LanKzy {
     }
 
     public static String GetPassword(){
-        //拿不到返回的是这个
+        //拿不到
         String password = "";
         //存的指定路径     cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + /password
         //拿的到就返回密码
@@ -150,7 +150,6 @@ public class LanKzy {
     public static void SetPassword(String password){
         FileOutputStream fos = null;
         verifyStoragePermissions(MainActivity.Ins);
-        //if(state.equals(Environment.MEDIA_MOUNTED)){
         System.err.println(file);
         System.err.println(path);
         try {
@@ -172,7 +171,7 @@ public class LanKzy {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + ".jpg");
         int w = 512;
         int h = 1024;
-        //整一个图片出来
+        //整一个图片
         Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 //        画笔
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -187,7 +186,7 @@ public class LanKzy {
         //然后根据数据画在画布上
         for(GridParam g:gp.gridParamList){
             c.drawText(g.placeHolder, x, y, paint);
-            //设置一个偏移  要不都画一起了
+            //设置一个偏移
             y += h / 8 / 2;
             c.drawText(g.content, x, y, paint);
             y += h / 8;
@@ -197,6 +196,7 @@ public class LanKzy {
             System.err.println("save Image:" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + fileName + ".jpg");
             //画完了保存
             bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
+            System.err.println("==================");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

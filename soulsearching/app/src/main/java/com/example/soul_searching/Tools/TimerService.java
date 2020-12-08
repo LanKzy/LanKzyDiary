@@ -50,7 +50,7 @@ public class TimerService extends Service {
 
             @Override
             public void onFinish() {
-                //这里弹窗
+                //弹窗
                 MainActivity.Ins.getManager().notify(1,builder.build());
                 Context c = getApplicationContext();
                 Intent i = new Intent(getApplicationContext(), TimerService.class);

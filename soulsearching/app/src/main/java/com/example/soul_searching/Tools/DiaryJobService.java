@@ -62,8 +62,8 @@ public class DiaryJobService extends JobService {
     private NotificationCompat.Builder GetBuilder(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
                 .setAutoCancel(true)
-                .setContentTitle("测试")
-                .setContentText("测试内容")
+                .setContentTitle("提醒")
+                .setContentText("今日份格子填了嘛")
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
