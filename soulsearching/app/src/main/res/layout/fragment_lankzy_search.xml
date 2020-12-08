@@ -28,14 +28,12 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="398dp"
-            android:layout_height="631dp"
+            android:layout_height="588dp"
             android:hint="answer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.461"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_con"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button11"
@@ -44,10 +42,9 @@
             android:text="searching"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.88"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_con"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.281" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

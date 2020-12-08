@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.os.Environment;
 
 import androidx.core.app.ActivityCompat;
@@ -36,6 +37,8 @@ public class LanKzy {
     }
 
     private static Map<String,GridParams> dataList;
+
+    private static Map<String,CountDownTimer> sdts;
 
     public static String[] placeHolder = new String[]{
         "心情怎么样","what is the weather today？","今日花费","special thing？","done thing？","today's mistake？"
