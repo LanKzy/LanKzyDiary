@@ -1,4 +1,4 @@
-package com.example.soul_searching.Tools;
+ package com.example.soul_searching.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ public class SearchData {
 
     public List<SearchData> child;
 
+    //这个DiaryData 存储了俩list  一个是内容一个是时间
     public List<DiaryData> diaryDataList;
 
     public int depth;
@@ -24,6 +25,7 @@ public class SearchData {
         if(child == null){
             return null;
         }
+        //这里会判断字符的深度和值是否匹配  如果是正确的值  返回存储的diaryDataList  就是那个最后一个节点存储的数据
         for(SearchData sd : child){
             System.err.println(sd.node);
             if(c.length == sd.depth && sd.node == c[cIndex]){
@@ -35,6 +37,7 @@ public class SearchData {
                 break;
             }
             if(sd.node == c[cIndex]){
+                //如果没有就继续去子元素里面查直到查到为止 没有数据就返回null
                 System.err.println(sd.node + "," + c);
                 return sd.getData(c,cIndex + 1);
             }

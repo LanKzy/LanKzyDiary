@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.os.Environment;
 
 import androidx.core.app.ActivityCompat;
@@ -31,11 +32,14 @@ public class LanKzy {
 
     private static String path;
 
+    //缓存直接获取这个就行
     public static Map<String,GridParams> getDataList() {
         return dataList;
     }
 
     private static Map<String,GridParams> dataList;
+
+    private static Map<String,CountDownTimer> sdts;
 
     public static String[] placeHolder = new String[]{
         "心情怎么样","what is the weather today？","今日花费","special thing？","done thing？","today's mistake？"
@@ -87,6 +91,7 @@ public class LanKzy {
             Map<String,GridParams> data = (Map<String,GridParams>) ois.readObject();
             ois.close();
             fis.close();
+            //每次读取缓存的时候就存到这个全局变量里
             dataList = data;
             System.err.println("Set dataList");
             if(dataList == null){

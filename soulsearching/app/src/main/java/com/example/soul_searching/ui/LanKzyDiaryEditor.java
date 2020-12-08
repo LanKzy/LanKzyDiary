@@ -258,6 +258,7 @@ public class LanKzyDiaryEditor extends Fragment {
             }
         });
 
+        //搜索按钮点击事件在这触发
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
