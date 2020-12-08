@@ -28,7 +28,7 @@ import java.util.Map;
  * Use the {@link LanKzySearch#newInstance} factory method to
  * create an instance of this fragment.
  */
-
+//搜索界面  点击了之后跳转到这
 public class LanKzySearch extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,26 +84,35 @@ public class LanKzySearch extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_lankzy_search, container, false);
 
+        //输入框
         input = rootView.findViewById(R.id.search_con);
+        //展示区
         emmm = rootView.findViewById(R.id.textView4);
+        //按钮  刚才报错是因为你弄了个FloatActionButton  这里获取的是Button   类型不对  就报错了
         Button button = rootView.findViewById(R.id.button11);
 
+        //首先创建一个节点
         sd = new SearchData(0);
 
         List<SearchData> sdList = new ArrayList<SearchData>();
-
+//        初始化子节点   节点的层级是按照关键词的长度算的   比如  今天吃啥   今在第一层     sd.child = sdList;就 放在这里
+//        天在第二层  就在子节点的子节点里  以此类推  下面的循环就是进行这个操作
         sd.child = sdList;
 
         Map<String, GridParams> dataList = LanKzy.getDataList();
 
         //初始化数据
+        //加载页面的时候获取缓存数据  然后转换成多叉树格式    啊  讲起来也好费劲
+        //拿到所有的数据  然后遍历
         for(Map.Entry<String, GridParams> map : dataList.entrySet()){
             String date = map.getKey();
-
+            //日期是作为数据的key保存的  所以直接拿key  就是搜索内容对应的日期
+            //然后遍历value
             List<GridParam> list = map.getValue().gridParamList;
             int tt = 0;
             for(GridParam gp : list){
                 tt++;
+                //拿到关键词
                 char[] placeHolder = gp.placeHolder.toCharArray();
                 SearchData.DiaryData diaryData = new SearchData.DiaryData();
                 diaryData.date = new ArrayList<String>();
@@ -111,11 +120,15 @@ public class LanKzySearch extends Fragment {
                 diaryData.date.add(date);
                 diaryData.content.add(gp.content);
                 List<SearchData> tempList = sd.child;
+//                在这遍历关键字
                 for(int i = 0;i < placeHolder.length;i++){
                     int index = -1;
                     int tempIndex = 0;
+                    //根据长度创建SearchData  就是节点
+                    //
                     for(SearchData sdChild : tempList){
                         if(sdChild.node.equals(placeHolder[i])){
+                            //这里判断有没有这个节点
                             index = tempIndex;
                             break;
                         }
@@ -123,6 +136,7 @@ public class LanKzySearch extends Fragment {
                     }
                     SearchData tempData = null;
                     if(index != -1){
+
                         tempData = tempList.get(index);
                         if(tempData.child ==null){
                             tempData.child = new ArrayList<SearchData>();
@@ -130,13 +144,18 @@ public class LanKzySearch extends Fragment {
                         tempList.add(tempData);
                         tempList = tempData.child;
                     }else{
+//                        如果没有这个节点  就创建一个新的  然后塞进去
                         tempData = new SearchData(i + 1);
                         tempData.node = placeHolder[i];
                         tempData.child = new ArrayList<SearchData>();
+                        //塞进去
                         tempList.add(tempData);
+                        //然后把遍历的目标换成子元素的 子节点List
                         tempList = tempData.child;
                     }
                     if(i == placeHolder.length - 1){
+                        //这里是已经到最后一个字符   比如今天吃啥  这个时候已经到啥了  这个节点存的值 SearchData.node 存的是'啥'
+                        //然后把所有今天吃啥这个关键字下的content  就是存储的内容  和存储的日期 date 放进这个节点下的list
                         if(tempData.diaryDataList == null){
                             tempData.diaryDataList = new ArrayList<SearchData.DiaryData>();
                         }
@@ -147,21 +166,28 @@ public class LanKzySearch extends Fragment {
             }
         }
 
+        //这个是搜索界面的按钮   点了就去刚才初始化的数据里面查找
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String keyWord = input.getText().toString();
                 if(keyWord.length() > 0){
-                    char[] c = keyWord.toCharArray();
+                    char[] c = keyWord.toCharArray();       //深度1    2    3    4  这里是'啥'对应的节点存了所有今天吃啥这个关键字的数据
+                    //首先把字符串分割成数组  方便查找 "今天吃啥" → ["今","天","吃","啥"]
+//                    然后遍历
                     for(int i = 0;i < c.length;i++){
+//                        上面已经创建好的数据有一个公开的方法  getData
+//                        两个参数 一个是需要查找的字符 一个是字符的深度
                         List<SearchData.DiaryData> data = sd.getData(c,0);
+                        //有数据就展示
                         if(data != null){
                             String text = keyWord + "\n\n";
                             for(SearchData.DiaryData d : data){
                                 if(d.content != null){
                                     Iterator<String> it1 = d.content.iterator();
                                     Iterator<String> it2 = d.date.iterator();
-
+                                    //从返回的数据里面拿到content和date的list
+//                                    同时遍历两个list  并拼接
                                     while (it1.hasNext() && it2.hasNext()) {
                                         String tempDate = it2.next();
                                         String tempContent = it1.next();
@@ -171,9 +197,11 @@ public class LanKzySearch extends Fragment {
                                     }
                                 }
                             }
+//                            拼接结束之后展示到文本框
                             emmm.setText(text);
                             break;
                         }else{
+                            //没有就不展示
                             System.err.println("啥也没查着");
                         }
 

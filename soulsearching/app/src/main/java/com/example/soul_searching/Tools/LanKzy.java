@@ -32,6 +32,7 @@ public class LanKzy {
 
     private static String path;
 
+    //缓存直接获取这个就行
     public static Map<String,GridParams> getDataList() {
         return dataList;
     }
@@ -90,6 +91,7 @@ public class LanKzy {
             Map<String,GridParams> data = (Map<String,GridParams>) ois.readObject();
             ois.close();
             fis.close();
+            //每次读取缓存的时候就存到这个全局变量里
             dataList = data;
             System.err.println("Set dataList");
             if(dataList == null){
