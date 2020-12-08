@@ -28,6 +28,7 @@ import java.util.Map;
  * Use the {@link LanKzySearch#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class LanKzySearch extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
