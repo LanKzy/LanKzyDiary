@@ -141,7 +141,9 @@ public class HomePage extends Fragment implements View.OnClickListener {
 
             final NotificationCompat.Builder builder = GetBuilder();
             //需要计时创建CountDownTimer
-            //
+
+
+            System.err.println("=======" + current);
             CountDownTimer cdt = new CountDownTimer(target - current,1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {

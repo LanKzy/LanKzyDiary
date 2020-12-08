@@ -17,6 +17,7 @@ import com.example.soul_searching.Tools.GridParam;
 import com.example.soul_searching.Tools.GridParams;
 import com.example.soul_searching.Tools.LanKzy;
 import com.example.soul_searching.Tools.SearchData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -86,7 +87,7 @@ public class LanKzySearch extends Fragment {
 
         input = rootView.findViewById(R.id.search_con);
         emmm = rootView.findViewById(R.id.textView4);
-        Button button = rootView.findViewById(R.id.button11);
+        FloatingActionButton button = rootView.findViewById(R.id.button11);
 
         sd = new SearchData(0);
 
